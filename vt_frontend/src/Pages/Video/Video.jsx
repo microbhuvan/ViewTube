@@ -1,4 +1,5 @@
 import "./video.css";
+import { Link } from "react-router-dom";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 const Video = () => {
@@ -19,15 +20,20 @@ const Video = () => {
           </div>
           <div className="videoProfileBlock">
             <div className="videoProfileBlockLeft">
-              <div className="videoProfileBlockLeftPicContainer">
+              <Link
+                to={"/user/1"}
+                className="videoProfileBlockLeftPicContainer"
+              >
                 <img
                   src="https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg?s=612x612&w=0&k=20&c=CK49ShLJwDxE4kiroCR42kimTuuhvuo2FH5y_6aSgEo="
                   alt="profile pic"
                   className="videoProfileBlockLeftPic"
                 ></img>
-              </div>
+              </Link>
               <div className="vtVideoSubView">
-                <div className="vtPostProfileName">User1</div>
+                <Link to={"/user/1"} className="vtPostProfileName">
+                  User1
+                </Link>
                 <div className="vtPostProfileSubs">34 subscribers</div>
               </div>
               <div className="subscribeButton">Subscibe</div>

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./Pages/Home/Home";
 import Video from "./Pages/Video/Video";
 import SideNavbar from "./components/SideNavbar/SideNavbar";
+import Profile from "./Pages/Profile/Profile";
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(true);
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home sideNavbar={sideNavbar} />}></Route>
         <Route path="/watch/:id" element={<Video />}></Route>
+        <Route path="/user/:id" element={<Profile />} />
       </Routes>
     </div>
   );

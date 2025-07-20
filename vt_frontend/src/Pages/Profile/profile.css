@@ -1,0 +1,119 @@
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-top: 56px;
+  padding: 10px 13px 0 13px;
+
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.profileTopSection {
+  width: 100%;
+  display: flex;
+  padding: 0 0 20px 0;
+}
+
+.profileTopSectionProfile {
+  width: 15%;
+  flex-shrink: 0;
+}
+
+.profileTopSectionImg {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+}
+
+.profileTopSectionAbout {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0 10px;
+  width: 85%;
+}
+
+.profileTopSectionAboutName {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.profileVideoTitle {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.profileVideoContainer {
+  display: flex;
+  gap: 10px;
+  height: 100vh;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.profileVideo {
+  width: 210px;
+  cursor: pointer;
+}
+
+.profileVideoThumbnail {
+  width: 100%;
+  height: 140px;
+}
+
+.profileVideoThumbnailImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+.profileVideoDetail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 5px;
+}
+
+.profileVideoDetailTitle {
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding-bottom: 2px;
+}
+
+.profileVideoDetailInfo {
+  font-size: 16px;
+}
+
+@media (max-width: 500px) {
+  .profilePage {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin-top: 56px;
+    padding: 10px 5px 0 5px;
+    justify-content: center;
+    flex: 1;
+    overflow-x: hidden;
+  }
+
+  .profileTopSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 20px 0;
+  }
+
+  .profileTopSectionProfile {
+    width: 35%;
+    flex-shrink: 0;
+  }
+}
