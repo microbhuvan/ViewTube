@@ -1,4 +1,5 @@
 import "./homepage.css";
+import { Link } from "react-router-dom";
 
 const HomePage = ({ sideNavbar }) => {
   const options = [
@@ -37,7 +38,7 @@ const HomePage = ({ sideNavbar }) => {
       {/**homepage MAIN*/}
       <div className="homeMainPage">
         <div className="vt-videoContainer">
-          <div className="vt-video">
+          <Link to={"/watch/:id"} className="vt-video">
             <div className="vt-thumbnailBox">
               <img
                 src="https://cdn.neowin.com/news/images/uploaded/2024/08/1723555868_youtube-logo.jpg"
@@ -56,12 +57,14 @@ const HomePage = ({ sideNavbar }) => {
               </div>
 
               <div className="vt-titleBoxTitle">
-                <div className="vt-videoTitle">smurfs-movie review</div>
+                <div className="vt-videoTitle">
+                  smurfs-movie review a asfsafsffeffsefsefefefa
+                </div>
                 <div className="vt-videoChannelName">jeremy jahans</div>
                 <div className="vt-videoViews">3 views</div>
               </div>
             </div>
-          </div>
+          </Link>
           {/** */}
           <div className="vt-video">
             <div className="vt-thumbnailBox">
@@ -80,7 +83,6 @@ const HomePage = ({ sideNavbar }) => {
                   className="vt-titleBoxProflePic"
                 />
               </div>
-
               <div className="vt-titleBoxTitle">
                 <div className="vt-videoTitle">smurfs-movie review</div>
                 <div className="vt-videoChannelName">jeremy jahans</div>
@@ -105,7 +107,6 @@ const HomePage = ({ sideNavbar }) => {
                   className="vt-titleBoxProflePic"
                 />
               </div>
-
               <div className="vt-titleBoxTitle">
                 <div className="vt-videoTitle">smurfs-movie review</div>
                 <div className="vt-videoChannelName">jeremy jahans</div>
@@ -130,7 +131,6 @@ const HomePage = ({ sideNavbar }) => {
                   className="vt-titleBoxProflePic"
                 />
               </div>
-
               <div className="vt-titleBoxTitle">
                 <div className="vt-videoTitle">smurfs-movie review</div>
                 <div className="vt-videoChannelName">jeremy jahans</div>

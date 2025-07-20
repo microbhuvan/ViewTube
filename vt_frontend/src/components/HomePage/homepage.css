@@ -68,6 +68,7 @@
   cursor: pointer;
   max-width: 380px;
   height: 275px;
+  margin-bottom: 17px;
 }
 
 .vt-thumbnailBox {
@@ -99,6 +100,7 @@
 .vt-titleBox {
   display: flex;
   padding-top: 10px;
+  box-sizing: border-box;
 }
 
 .vt-titleBoxProfile {
@@ -107,6 +109,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .vt-titleBoxProflePic {
@@ -121,11 +124,19 @@
   box-sizing: border-box;
   padding: 5px;
   width: 100%;
+  flex: 1;
+  min-width: 0;
 }
 
 .vt-videoTitle {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 18px;
+  box-sizing: border-box;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .vt-videoChannelName {

@@ -1,5 +1,6 @@
 import "./navbar.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import MicIcon from "@mui/icons-material/Mic";
@@ -30,10 +31,10 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         <div className="navbarHamburger" onClick={sideNavbarFunc}>
           <MenuIcon sx={{ fontSize: "30px" }} />
         </div>
-        <div className="navbarHome">
+        <Link to={"/"} className="navbarHome">
           <PlayCircleIcon sx={{ fontSize: "30px" }} />
           <div className="navbarViewTube">ViewTube</div>
-        </div>
+        </Link>
       </div>
       <div className="navbar-middle">
         <div className="navbarSearchBox">

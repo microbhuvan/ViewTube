@@ -14,7 +14,8 @@ const Video = () => {
         </div>
         <div className="videoAbout">
           <div className="videoTitle">
-            Inside India's FIRST Dolby Cinema - CityPride Pune
+            The Last Colour Negative Motion Picture Film In The World: Kodak
+            Vision 3
           </div>
           <div className="videoProfileBlock">
             <div className="videoProfileBlockLeft">
