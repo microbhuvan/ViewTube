@@ -1,0 +1,275 @@
+.videoPage {
+  margin-top: 56px;
+  display: flex;
+  gap: 10px;
+  padding: 30px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.videoSection {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
+.video {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.videoAbout {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.videoTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.videoProfileBlock {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.videoProfileBlockLeft {
+  display: flex;
+  gap: 15px;
+}
+
+.videoProfileBlockLeftPicContainer {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.videoProfileBlockLeftPic {
+  width: 100%;
+  height: 100%;
+}
+
+.vtVideoSubView {
+  display: flex;
+  flex-direction: column;
+}
+
+.vtPostProfileName {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.vtPostProfileSubs {
+  font-size: 14px;
+  color: gray;
+}
+
+.subscribeButton {
+  background-color: gainsboro;
+  padding: 0px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  height: 36px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.vtVideoLikeBlock {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+  height: 36px;
+  max-width: 120px;
+}
+
+.likeIcon {
+  display: flex;
+  gap: 10px;
+  border-right: 1px solid black;
+}
+
+.vtLikeNumber {
+  font-weight: bold;
+  padding-right: 3px;
+}
+
+.videoAboutDescriptionBlock {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+  background-color: #a5a5a538;
+  width: 100%;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+.videoCommentSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.videCommentSectionTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.videoSelfComment {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.videoSelfCommentProfile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.addComment {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.addCommentInput {
+  width: 100%;
+  height: 35px;
+  border: none;
+  font-size: 16px;
+  border-bottom: 1px solid gray;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    font-size: 16px;
+  }
+}
+
+.cancelSubmitComment {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.commentButton {
+  padding: 8px 16px;
+  border-radius: 18px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.othersCommentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.othersCommentsBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.othersCommentsBlockHeader {
+  display: flex;
+  gap: 10px;
+}
+
+.profileNameComment {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.othersCommentBlockComment {
+  margin-top: 5px;
+}
+
+.videoOtherComment {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+/* suggetion part from here*/
+
+.videoSuggetion {
+  width: 35%;
+  padding: 10px 15px;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.videoSuggetionBlock {
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
+}
+
+.videoSuggetionThumbnail {
+  width: 168px;
+  height: 94px;
+}
+
+.videoSuggetionThumbnailImg {
+  width: inherit;
+}
+
+.videoSuggetionAbout {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.videoSuggetionAboutTitle {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 550px) {
+  .videoPage {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .videoSection {
+    width: 100%;
+  }
+
+  .videoSuggetion {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .videoProfileBlock {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
