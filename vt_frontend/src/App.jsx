@@ -6,9 +6,10 @@ import Home from "./Pages/Home/Home";
 import Video from "./Pages/Video/Video";
 import SideNavbar from "./components/SideNavbar/SideNavbar";
 import Profile from "./Pages/Profile/Profile";
+import VideoUpload from "./Pages/VideoUpload/VideoUpload";
 
 function App() {
-  const [sideNavbar, setSideNavbar] = useState(true);
+  const [sideNavbar, setSideNavbar] = useState(false);
 
   const setSideNavbarFunc = (value) => {
     setSideNavbar(value);
@@ -18,9 +19,11 @@ function App() {
       <Navbar setSideNavbarFunc={setSideNavbarFunc} sideNavbar={sideNavbar} />
       <SideNavbar sideNavbar={sideNavbar} />
       <Routes>
-        <Route path="/" element={<Home sideNavbar={sideNavbar} />}></Route>
-        <Route path="/watch/:id" element={<Video />}></Route>
+        <Route path="/" element={<Home sideNavbar={sideNavbar} />} />
+        <Route path="/watch/:id" element={<Video />} />
         <Route path="/user/:id" element={<Profile />} />
+        <Route path="/:id/upload" element={<VideoUpload />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </div>
   );

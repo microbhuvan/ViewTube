@@ -15,6 +15,21 @@
   background-color: white;
 }
 
+.navbarFull {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 0px;
+  box-sizing: border-box;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  height: 56px;
+  border: 1px solid black;
+  background-color: white;
+}
+
 .navbar-left {
   display: flex;
   justify-content: flex-start;
@@ -121,11 +136,14 @@
   top: 40px;
   width: fit-content;
   z-index: 20;
+  border-radius: 10px;
 }
 
 .navbarModelOption {
   padding: 10px;
   font-size: 20px;
   text-align-last: right;
+  background-color: white;
+  cursor: pointer;
   border: 1px solid black;
 }
