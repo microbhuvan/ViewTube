@@ -7,6 +7,7 @@ import Video from "./Pages/Video/Video";
 import SideNavbar from "./components/SideNavbar/SideNavbar";
 import Profile from "./Pages/Profile/Profile";
 import VideoUpload from "./Pages/VideoUpload/VideoUpload";
+import SignUp from "./Pages/SignUp/SignUp";
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(false);

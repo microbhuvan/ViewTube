@@ -1,7 +1,21 @@
 import "./videoupload.css";
+import { useState } from "react";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 
 const VideoUpload = () => {
+  const [inputField, setInputField] = useState({
+    title: "",
+    description: "",
+    category: "",
+    thumbnail: "",
+    video: "",
+  });
+
+  console.log(inputField);
+
+  const handleOnChangeInput = (event, name) => {
+    setInputField({ ...inputField, [name]: event.target.value });
+  };
   return (
     <div className="videoUpload">
       <div className="uploadBox">
@@ -15,16 +29,28 @@ const VideoUpload = () => {
           <input
             type="text"
             placeholder="Title of Video"
+            value={inputField.title}
+            onChange={(e) => {
+              handleOnChangeInput(e, "title");
+            }}
             className="uploadFormInput"
           ></input>
           <input
             type="text"
             placeholder="Description"
+            value={inputField.description}
+            onChange={(e) => {
+              handleOnChangeInput(e, "description");
+            }}
             className="uploadFormInput"
           ></input>
           <input
             type="text"
             placeholder="Category"
+            value={inputField.category}
+            onChange={(e) => {
+              handleOnChangeInput(e, "category");
+            }}
             className="uploadFormInput"
           ></input>
           <div className="uploadBtnTV">
@@ -33,6 +59,10 @@ const VideoUpload = () => {
               type="file"
               accept="image/*"
               className="inputButtons"
+              value={inputField.thumbnail}
+              onChange={(e) => {
+                handleOnChangeInput(e, "thumbnail");
+              }}
             ></input>
           </div>
           <div className="uploadBtnTV">
@@ -41,6 +71,10 @@ const VideoUpload = () => {
               type="file"
               accept="video/mp4, video/webm, video/*"
               className="inputButtons"
+              value={inputField.video}
+              onChange={(e) => {
+                handleOnChangeInput(e, "video");
+              }}
             ></input>
           </div>
         </div>
