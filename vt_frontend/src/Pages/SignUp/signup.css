@@ -12,6 +12,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
+  overflow: auto;
 }
 
 .signupCard {
@@ -92,6 +93,11 @@
     color: black;
     background-color: white;
   }
+}
+
+.profileImage {
+  width: 50px;
+  height: 50px;
 }
 
 @media (max-width: 900px) {
