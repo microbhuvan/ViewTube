@@ -1,5 +1,7 @@
 const { User } = require("../models/user");
 const bcrypt = require("bcryptjs");
+const JWT = require("jsonwebtoken");
+require("dotenv").config();
 
 exports.signUp = async (req, res) => {
   try {
@@ -21,9 +23,16 @@ exports.signUp = async (req, res) => {
       });
 
       await user.save();
-      return res
-        .status(201)
-        .json({ message: "user registered successfully", success: "true" });
+      const token = await JWT.sign({ id: user.id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      });
+      res.cookie("token", token, { httpOnly: true });
+
+      return res.status(201).json({
+        message: "user registered successfully",
+        success: "true",
+        token: token,
+      });
     }
   } catch (err) {
     return res.status(500).json({ error: "server error" });
@@ -34,13 +43,29 @@ exports.logIn = async (req, res) => {
   try {
     const { userName, password } = req.body;
     const logInUser = await User.findOne({ userName });
+
     if (logInUser) {
       const logInUserPassword = logInUser.password;
       const isMatch = await bcrypt.compare(password, logInUserPassword);
+      console.log(isMatch);
+      console.log(logInUser);
+      console.log(logInUser.id);
       if (isMatch) {
-        return res
-          .status(200)
-          .json({ message: "logged in successfully", success: "yes" });
+        const token = await JWT.sign(
+          { id: logInUser.id },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1d",
+          }
+        );
+        console.log(token);
+        res.cookie("token", token, { httpOnly: true });
+
+        return res.status(200).json({
+          message: "logged in successfully",
+          success: "yes",
+          token: token,
+        });
       } else {
         return res.status(401).json({ error: "invalid credentials" });
       }
@@ -50,4 +75,9 @@ exports.logIn = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ error: "server error" });
   }
+};
+
+exports.logOut = async (req, res) => {
+  res.cookie("token", null, { expiresIn: new Date(Date.now()) });
+  return res.status(200).json({ message: "logout successfull" });
 };
