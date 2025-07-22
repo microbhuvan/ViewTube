@@ -3,6 +3,7 @@ const { User } = require("../models/user");
 require("dotenv").config();
 
 const userAuth = async (req, res, next) => {
+  console.log("entering userAuth");
   const token = req.cookies.token;
   if (!token) {
     return res.status(401).json({ error: "authorization error" });
@@ -11,6 +12,7 @@ const userAuth = async (req, res, next) => {
       const userId = await JWT.verify(token, process.env.JWT_SECRET);
       const { id } = userId;
       const user = await User.findById(id);
+
       if (!user) {
         return res.status(400).json({ error: "user not found" });
       }
