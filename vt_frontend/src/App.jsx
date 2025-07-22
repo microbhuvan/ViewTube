@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./Pages/Home/Home";
@@ -8,9 +9,21 @@ import SideNavbar from "./components/SideNavbar/SideNavbar";
 import Profile from "./Pages/Profile/Profile";
 import VideoUpload from "./Pages/VideoUpload/VideoUpload";
 import SignUp from "./Pages/SignUp/SignUp";
+import { BASE_URL } from "./utils/constant";
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(BASE_URL + "/api/allVideo")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const setSideNavbarFunc = (value) => {
     setSideNavbar(value);
