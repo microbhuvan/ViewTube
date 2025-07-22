@@ -30,7 +30,7 @@ exports.signUp = async (req, res) => {
 
       return res.status(201).json({
         message: "user registered successfully",
-        success: "true",
+        success: true,
         token: token,
       });
     }
@@ -47,9 +47,7 @@ exports.logIn = async (req, res) => {
     if (logInUser) {
       const logInUserPassword = logInUser.password;
       const isMatch = await bcrypt.compare(password, logInUserPassword);
-      console.log(isMatch);
-      console.log(logInUser);
-      console.log(logInUser.id);
+
       if (isMatch) {
         const token = await JWT.sign(
           { id: logInUser.id },
@@ -63,7 +61,7 @@ exports.logIn = async (req, res) => {
 
         return res.status(200).json({
           message: "logged in successfully",
-          success: "yes",
+          success: true,
           token: token,
         });
       } else {

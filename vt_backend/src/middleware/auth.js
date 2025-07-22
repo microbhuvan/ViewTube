@@ -3,11 +3,11 @@ const { User } = require("../models/user");
 require("dotenv").config();
 
 const userAuth = async (req, res, next) => {
-  try {
-    const token = req.cookie.token;
-    if (!token) {
-      return res.status(401).json({ error: "authorization error" });
-    } else {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ error: "authorization error" });
+  } else {
+    try {
       const userId = await JWT.verify(token, process.env.JWT_SECRET);
       const { id } = userId;
       const user = await User.findById(id);
@@ -16,8 +16,10 @@ const userAuth = async (req, res, next) => {
       }
       req.user = user;
       next();
+    } catch (err) {
+      return res.status(500).json({ error: "server error" });
     }
-  } catch (err) {
-    return res.status(500).json({ error: "server error" });
   }
 };
+
+module.exports = userAuth;

@@ -1,0 +1,11 @@
+const express = require("express");
+const videoRouter = express.Router();
+const videoController = require("../controllers/video");
+const userAuth = require("../middleware/auth");
+
+videoRouter.post("/video", userAuth, videoController.videoUpload);
+videoRouter.get("/allvideo", videoController.getAllVideo);
+videoRouter.get("/getvideo/:id", videoController.getVideoById);
+videoRouter.get("/:userId/getuservideo", videoController.getUserVideo);
+
+module.exports = videoRouter;
