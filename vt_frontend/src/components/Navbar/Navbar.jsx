@@ -1,5 +1,5 @@
 import "./navbar.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -10,6 +10,7 @@ import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsAct
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import Login from "../Login/Login";
+import { BASE_URL } from "../../utils/constant";
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   const [userPic, setUserPic] = useState(
@@ -17,11 +18,14 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   );
   const [navbarModel, setNavbarModel] = useState(false);
   const [login, setLogin] = useState(false);
-  const [navbarLoginView, setNavbarLoginView] = useState(false);
+  const [navbarLoginView, setNavbarLoginView] = useState(false); //this is for navbar width setting for login page
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //this is for checking actual login
 
   const navigate = useNavigate();
   const handleProfile = () => {
-    navigate("/user/1");
+    let userId = localStorage.getItem("userId");
+    navigate(`/user/${userId}`);
     setNavbarModel(false);
   };
 
@@ -39,14 +43,41 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     setNavbarLoginView(false);
   };
 
+  const setLogoutFunc = async () => {
+    await axios
+      .post(`${BASE_URL}/auth/logout`, {}, { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onClickOfPopUpOption = (button) => {
     if (button === "login") {
       setNavbarModel(false);
       setNavbarLoginView(true);
       setLogin(true);
     } else {
+      localStorage.clear();
+      setLogoutFunc();
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      }, 1000);
     }
   };
+
+  useEffect(() => {
+    let userProfilePic = localStorage.getItem("userProfilePic");
+    console.log(localStorage.getItem("userId") !== null ? true : false);
+    setIsLoggedIn(localStorage.getItem("userId") !== null ? true : false);
+
+    if (userProfilePic !== null) {
+      setUserPic(userProfilePic);
+    }
+  }, []);
 
   return (
     <div className={navbarLoginView ? "navbarFull" : "navbar"}>
@@ -84,21 +115,27 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         <img src={userPic} className="userPic" onClick={handleClick} />
         {navbarModel && (
           <div className="navbarModel">
-            <div className="navbarModelOption" onClick={handleProfile}>
-              Profile
-            </div>
-            <div
-              className="navbarModelOption"
-              onClick={() => onClickOfPopUpOption("login")}
-            >
-              Login
-            </div>
-            <div
-              className="navbarModelOption"
-              onClick={() => onClickOfPopUpOption("logout")}
-            >
-              Logout
-            </div>
+            {isLoggedIn && (
+              <div className="navbarModelOption" onClick={handleProfile}>
+                Profile
+              </div>
+            )}
+            {isLoggedIn && (
+              <div
+                className="navbarModelOption"
+                onClick={() => onClickOfPopUpOption("logout")}
+              >
+                Logout
+              </div>
+            )}
+            {!isLoggedIn && (
+              <div
+                className="navbarModelOption"
+                onClick={() => onClickOfPopUpOption("login")}
+              >
+                Login
+              </div>
+            )}
           </div>
         )}
       </div>

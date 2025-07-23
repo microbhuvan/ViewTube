@@ -1,8 +1,12 @@
 import "./signup.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import { toast, ToastContainer } from "react-toastify";
+import { BASE_URL } from "../../utils/constant";
+import CircularProgress from "@mui/material/CircularProgress";
+import { LinearProgress } from "@mui/material";
 
 const SignUp = () => {
   const [uploadImageUrl, setUploadImageUrl] = useState(
@@ -15,6 +19,7 @@ const SignUp = () => {
     about: "",
     profilePic: uploadImageUrl,
   });
+
   const handleInputField = (event, name) => {
     setSignUpField({
       ...signUpField,
@@ -22,6 +27,7 @@ const SignUp = () => {
     });
   };
 
+  const [loader, setLoader] = useState(false);
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -30,20 +36,44 @@ const SignUp = () => {
     //ViewTube
     data.append("upload_preset", "ViewTube");
     try {
+      setLoader(true);
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
         }/image/upload`,
         data
       );
+
       const imageUrl = res.data.url;
+      setLoader(false);
       setUploadImageUrl(imageUrl);
       setSignUpField({ ...signUpField, profilePic: imageUrl });
       console.log(res);
     } catch (err) {
       console.log(err);
+      setLoader(true);
     }
   };
+
+  const [progressBar, setProgressBar] = useState(false);
+  const navigate = useNavigate();
+  const handleSignUp = async () => {
+    setProgressBar(true);
+    await axios
+      .post(`${BASE_URL}/auth/signup`, signUpField)
+      .then((res) => {
+        console.log(res);
+        toast.success(res?.data?.message);
+        setProgressBar(false);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        setProgressBar(false);
+        toast.error(err?.response?.data?.error);
+      });
+  };
+
   console.log(signUpField);
 
   return (
@@ -105,15 +135,20 @@ const SignUp = () => {
               alt="profile pic"
               className="profileImage"
             ></img>
+            {loader && <CircularProgress />}
           </div>
         </div>
         <div className="signupButtons">
-          <div className="btn">SignUp</div>
+          <div className="btn" onClick={handleSignUp}>
+            SignUp
+          </div>
           <Link to={"/"} className="btn">
             Home
           </Link>
         </div>
+        {progressBar && <LinearProgress />}
       </div>
+      <ToastContainer />
     </div>
   );
 };

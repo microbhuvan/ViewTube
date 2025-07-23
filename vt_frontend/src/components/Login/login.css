@@ -46,6 +46,7 @@
   width: 100%;
   align-items: center;
   justify-content: center;
+  color: white;
 }
 
 .userNameLogin {
@@ -53,6 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .userNameLoginUsername {
@@ -62,6 +64,7 @@
   border: none;
   border-radius: 5px;
   background-color: #222222;
+  color: white;
 }
 
 .loginButtons {
