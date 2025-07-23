@@ -105,7 +105,7 @@ const Video = () => {
           </div>
         </div>
         <div className="videoCommentSection">
-          <div className="videCommentSectionTitle">{`${comments.length} Comments`}</div>
+          <div className="videCommentSectionTitle">{`${comments?.length} Comments`}</div>
           <div className="videoSelfComment">
             <img
               src={videoData?.user?.profilePic}
@@ -127,7 +127,7 @@ const Video = () => {
             </div>
           </div>
           <div className="othersCommentsSection">
-            {comments.map((comment, index) => {
+            {comments?.map((comment, index) => {
               return (
                 <div className="videoOtherComment" key={index}>
                   <img
