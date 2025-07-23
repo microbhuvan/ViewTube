@@ -102,11 +102,20 @@
   display: flex;
   gap: 10px;
   border-right: 1px solid black;
+  display: flex;
+  align-items: center;
 }
 
 .vtLikeNumber {
   font-weight: bold;
   padding-right: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.dislikeIcon {
+  display: flex;
+  align-items: center;
 }
 
 .videoAboutDescriptionBlock {
