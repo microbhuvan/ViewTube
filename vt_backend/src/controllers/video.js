@@ -1,11 +1,63 @@
 require("dotenv").config();
 const { Video } = require("../models/video");
 const { User } = require("../models/user");
+const ffprobePath = require("ffprobe-static").path;
+const { spawn } = require("child_process");
 
 exports.videoUpload = async (req, res) => {
   try {
     const { title, description, category, thumbnail, videoLink } = req.body;
     const reqUser = req.user;
+
+    //to get video duration
+    function getVideoDuration(filePath) {
+      return new Promise((resolve, reject) => {
+        const ffprobe = spawn(ffprobePath, [
+          "-v",
+          "error",
+          "-show_entries",
+          "format=duration",
+          "-of",
+          "json",
+          filePath,
+        ]);
+
+        let data = "";
+        ffprobe.stdout.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        ffprobe.stderr.on("data", (err) => {
+          console.error(`ffprobe error: ${err}`);
+        });
+
+        ffprobe.on("close", (code) => {
+          if (code !== 0) {
+            reject(new Error(`ffprobe exited with code ${code}`));
+          } else {
+            const parsed = JSON.parse(data);
+            resolve(parseFloat(parsed.format.duration));
+          }
+        });
+      });
+    }
+
+    function formatDuration(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = Math.floor(seconds % 60);
+
+      if (h > 0) {
+        return `${h}:${m.toString().padStart(2, "0")}:${s
+          .toString()
+          .padStart(2, "0")}}`;
+      } else {
+        return `${m}:${s.toString().padStart(2, "0")}`;
+      }
+    }
+
+    const durationInSeconds = await getVideoDuration(videoLink);
+    const videoDuration = await formatDuration(durationInSeconds);
 
     const video = new Video({
       user: reqUser.id,
@@ -14,6 +66,7 @@ exports.videoUpload = async (req, res) => {
       category,
       thumbnail,
       videoLink,
+      videoLength: videoDuration,
     });
     console.log(video);
     await video.save();

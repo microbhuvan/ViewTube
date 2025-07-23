@@ -39,6 +39,9 @@ const videoSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    videoLength: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

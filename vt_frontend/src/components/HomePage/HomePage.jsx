@@ -64,7 +64,7 @@ const HomePage = ({ sideNavbar }) => {
                     alt="thumbnail"
                     className="vt-thumbnail"
                   />
-                  <div className="vt-thumbnailTime">18:50</div>
+                  <div className="vt-thumbnailTime">{video?.videoLength}</div>
                 </Link>
                 <div className="vt-titleBox">
                   <Link to={"/user/1"} className="vt-titleBoxProfile">
