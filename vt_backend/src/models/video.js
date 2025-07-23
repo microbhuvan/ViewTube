@@ -22,6 +22,8 @@ const videoSchema = new mongoose.Schema(
     thumbnail: {
       type: String,
       required: true,
+      default:
+        "https://www.contentviewspro.com/wp-content/uploads/2017/07/default_image.png",
     },
     videoLink: {
       type: String,

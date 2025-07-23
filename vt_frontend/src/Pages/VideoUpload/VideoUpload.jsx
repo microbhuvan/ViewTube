@@ -1,9 +1,13 @@
 import "./videoupload.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import * as React from "react";
+import { LinearProgress } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+
+import { BASE_URL } from "../../utils/constant";
 
 const VideoUpload = () => {
   const [inputField, setInputField] = useState({
@@ -16,6 +20,9 @@ const VideoUpload = () => {
 
   console.log(inputField);
   const [loader, setLoader] = useState(false);
+  const [progressBar, setProgressBar] = useState(false);
+  const navigate = useNavigate();
+
   const handleOnChangeInput = (event, name) => {
     setInputField({ ...inputField, [name]: event.target.value });
   };
@@ -46,6 +53,31 @@ const VideoUpload = () => {
       console.log(err);
     }
   };
+
+  const handleUploadFunc = async () => {
+    setProgressBar(true);
+    await axios
+      .post(`${BASE_URL}/api/video`, inputField, { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        toast.success(res?.data?.message);
+        setProgressBar(false);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err?.response?.data?.error);
+        toast.error("fill all the fields correctly");
+        setProgressBar(false);
+      });
+  };
+
+  useEffect(() => {
+    let isLogin = localStorage.getItem("userId");
+    if (isLogin == null) {
+      navigate("/");
+    }
+  }, []);
 
   console.log(inputField);
 
@@ -94,6 +126,7 @@ const VideoUpload = () => {
               className="inputButtons"
               onChange={(e) => uploadField(e, "image")}
             ></input>
+            {loader && <CircularProgress disableShrink />}
           </div>
           <div className="uploadBtnTV">
             Video .
@@ -107,10 +140,16 @@ const VideoUpload = () => {
           </div>
         </div>
         <div className="uploadBtns">
-          <div className="uploadBtn-form">Upload</div>
-          <div className="uploadBtn-form">Home</div>
+          <div className="uploadBtn-form" onClick={handleUploadFunc}>
+            Upload
+          </div>
+          <div className="uploadBtn-form" onClick={() => navigate("/")}>
+            Home
+          </div>
         </div>
       </div>
+      {progressBar && <LinearProgress />}
+      <ToastContainer />
     </div>
   );
 };

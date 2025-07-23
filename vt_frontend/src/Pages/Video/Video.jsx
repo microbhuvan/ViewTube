@@ -6,6 +6,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import { BASE_URL } from "../../utils/constant";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const Video = () => {
   const [message, setMessage] = useState(""); //for comments
@@ -36,7 +37,41 @@ const Video = () => {
         console.log(res?.data?.comments);
         setComments(res?.data?.comments);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleComment = async () => {
+    try {
+      if (localStorage.getItem("userId") === null) {
+        setMessage("");
+        throw new Error();
+      }
+
+      const body = {
+        video: id,
+        message: message,
+      };
+      await axios
+        .post(`${BASE_URL}/commentApi/comment`, body, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res);
+          const newComment = res?.data?.comment;
+          setComments([newComment, ...comments]);
+          setMessage("");
+          toast.success("comment added successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("error");
+        });
+    } catch (err) {
+      console.log(err);
+      toast.error("login to continue");
+    }
   };
 
   useEffect(() => {
@@ -121,8 +156,18 @@ const Video = () => {
                 placeholder="Add a comment"
               />
               <div className="cancelSubmitComment">
-                <div className="cancelComment commentButton">Cancel</div>
-                <div className="commentComment commentButton">Comment</div>
+                <div
+                  className="cancelComment commentButton"
+                  onClick={() => setMessage("")}
+                >
+                  Cancel
+                </div>
+                <div
+                  className="commentComment commentButton"
+                  onClick={handleComment}
+                >
+                  Comment
+                </div>
               </div>
             </div>
           </div>
@@ -206,6 +251,7 @@ const Video = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

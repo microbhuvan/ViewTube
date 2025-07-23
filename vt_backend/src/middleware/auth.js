@@ -4,7 +4,10 @@ require("dotenv").config();
 
 const userAuth = async (req, res, next) => {
   console.log("entering userAuth");
+
   const token = req.cookies.token;
+
+  console.log(token);
   if (!token) {
     return res.status(401).json({ error: "authorization error" });
   } else {
@@ -16,6 +19,7 @@ const userAuth = async (req, res, next) => {
       if (!user) {
         return res.status(400).json({ error: "user not found" });
       }
+
       req.user = user;
       next();
     } catch (err) {

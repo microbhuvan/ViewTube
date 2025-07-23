@@ -15,10 +15,14 @@ const Login = ({ setLoginFunc }) => {
   const handleLogin = async () => {
     setProgressBar(true);
     await axios
-      .post(`${BASE_URL}/auth/login`, {
-        userName: userName,
-        password: password,
-      })
+      .post(
+        `${BASE_URL}/auth/login`,
+        {
+          userName: userName,
+          password: password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res?.data?.token);

@@ -3,10 +3,13 @@ const { Comment } = require("../models/comment");
 exports.addComment = async (req, res) => {
   try {
     let { video, message } = req.body;
-    const comment = new Comment({ user: req.user.id, video, message }).populate(
-      "user",
-      "userName about profilePic"
-    );
+
+    const comment = await new Comment({
+      user: req.user.id,
+      video,
+      message,
+    }).populate("user", "userName about profilePic");
+
     await comment.save();
 
     return res.status(200).json({ success: true, comment });
