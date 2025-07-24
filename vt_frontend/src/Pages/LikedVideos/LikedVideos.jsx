@@ -25,36 +25,41 @@ const LikedVideos = () => {
 
   return (
     <div className="likedVideoPage ">
-      <div className="header">Liked Videos</div>
-      <div className="videoContainer">
+      <div className="likedVideoHeader">Liked Videos</div>
+      <div className="likedVideoContainer">
         {videos?.map((video, index) => {
           return (
-            <Link to={`/watch/${video?._id}`} className="video" key={index}>
-              <div className="thumbnail">
+            <Link
+              to={`/watch/${video?._id}`}
+              className="likedVideo"
+              key={index}
+            >
+              <div className="likedVideoThumbnail">
                 <img
                   src={video?.thumbnail}
                   alt="thumbnail image"
-                  className="thumbnailImage"
+                  className="likedVideoThumbnailImage"
                 ></img>
               </div>
-              <div className="videoInfo">
-                <div className="profile">
+              <div className="likedVideoInfo">
+                <div className="likedVideoProfile">
                   <img
                     src={video?.user?.profilePic}
                     alt="profile image"
                     className="profileImage"
                   ></img>
                 </div>
-                <div className="videoDesc">
-                  <div className="videoTitle">{video?.title}</div>
-                  <div className="profileName">{video?.user?.userName}</div>
-                  <div className="videoViews">{`${video?.views} views`}</div>
+                <div className="likedVideoDesc">
+                  <div className="likedVideoTitle">{video?.title}</div>
+                  <div className="likedVideoProfileName">
+                    {video?.user?.userName}
+                  </div>
+                  <div className="likedVideoViews">{`${video?.views} views`}</div>
                 </div>
               </div>
             </Link>
           );
         })}
-        {/** */}
       </div>
     </div>
   );
