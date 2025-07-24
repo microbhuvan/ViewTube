@@ -148,3 +148,94 @@ exports.incrementViews = async (req, res) => {
     return res.status(500).json({ message: "server errror", err });
   }
 };
+
+exports.toggleLike = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const videoId = req.params.id;
+
+    const video = await Video.findById(videoId);
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    let liked = false;
+
+    if (video.likedBy.includes(userId)) {
+      //remove like if already exist
+      video.like -= 1;
+      video.likedBy.pull(userId);
+      await User.findByIdAndUpdate(userId, { $pull: { likedVideos: videoId } });
+      liked = false;
+    } else {
+      //add like
+      video.like += 1;
+      video.likedBy.push(userId);
+      await User.findByIdAndUpdate(userId, {
+        $addToSet: { likedVideos: videoId }, //ADDS ONLY UNIQUE VALUES
+      });
+
+      //remove dislike if any
+      if (video.dislikedBy.includes(userId)) {
+        video.dislike -= 1;
+        video.dislikedBy.pull(userId);
+      }
+
+      liked = true;
+    }
+
+    await video.save();
+
+    return res.status(200).json({
+      message: liked ? "Video Liked" : "Like Removed",
+      likes: video.like,
+      dislikes: video.dislike,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "server error" });
+  }
+};
+
+exports.toggleDislike = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const videoId = req.params.id;
+
+    const video = await Video.findById(videoId);
+
+    let disliked = true;
+
+    if (video.dislikedBy.includes(userId)) {
+      //remove dislike if already exist
+      video.dislike -= 1;
+      video.dislikedBy.pull(userId);
+      disliked = false;
+    } else {
+      //add dislike
+      video.dislike += 1;
+      video.dislikedBy.push(userId);
+
+      //if liked before remove it
+      if (video.likedBy.includes(userId)) {
+        video.like -= 1;
+        video.likedBy.pull(userId);
+        await User.findByIdAndUpdate(userId, {
+          $pull: { likedVideos: videoId },
+        });
+      }
+
+      disliked = true;
+
+      return res.status(200).json({
+        message: disliked ? "Video Disliked" : "Dislike Removed",
+        likes: video.like,
+        dislikes: video.dislike,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "server error" });
+  }
+};
