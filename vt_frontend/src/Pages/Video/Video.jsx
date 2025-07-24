@@ -103,6 +103,72 @@ const Video = () => {
     }
   };
 
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const handleLike = async () => {
+    await axios
+      .post(
+        `${BASE_URL}/api/video/${id}/toggle-like`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setVideoData((prev) => ({
+          ...prev,
+          like: res?.data?.likes,
+          dislike: res?.data?.dislikes,
+        }));
+        setIsLiked((prev) => !prev);
+
+        if (isDisliked) {
+          setIsDisliked(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDislike = async () => {
+    await axios
+      .post(
+        `${BASE_URL}/api/video/${id}/toggle-dislike`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setVideoData((prev) => ({
+          ...prev,
+          like: res?.data?.likes,
+          dislike: res?.data?.dislikes,
+        }));
+        setIsDisliked((prev) => !prev);
+
+        if (isLiked) {
+          setIsLiked(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (videoData?.likedBy?.includes(userId)) {
+      setIsLiked(true);
+    }
+    if (videoData?.dislikedBy?.includes(userId)) {
+      setIsDisliked(true);
+    }
+  }, [id, videoData]);
+
   useEffect(() => {
     fetchVideoById();
     getCommentByVideoId();
@@ -156,12 +222,15 @@ const Video = () => {
 
             {/**rightblock PROFILE */}
             <div className="vtVideoLikeBlock">
-              <div className="likeIcon">
-                <ThumbUpOffAltIcon />
+              <div className="likeIcon" onClick={handleLike}>
+                <ThumbUpOffAltIcon className={isLiked ? "likeButton" : ""} />
                 <div className="vtLikeNumber">{videoData?.like}</div>
               </div>
-              <div className="dislikeIcon">
-                <ThumbDownOffAltIcon />
+              <div className="dash">|</div>
+              <div className="dislikeIcon" onClick={handleDislike}>
+                <ThumbDownOffAltIcon
+                  className={isDisliked ? "dislikeButton" : ""}
+                />
               </div>
             </div>
           </div>

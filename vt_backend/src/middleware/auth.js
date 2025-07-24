@@ -14,6 +14,7 @@ const userAuth = async (req, res, next) => {
     try {
       const userId = await JWT.verify(token, process.env.JWT_SECRET);
       const { id } = userId;
+
       const user = await User.findById(id);
 
       if (!user) {

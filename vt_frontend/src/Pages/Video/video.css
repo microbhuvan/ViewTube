@@ -86,13 +86,12 @@
 
 .vtVideoLikeBlock {
   display: flex;
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px;
+  padding: 5px;
   box-sizing: border-box;
   border-radius: 10px;
-  border: 1px solid black;
   cursor: pointer;
   height: 36px;
   max-width: 120px;
@@ -101,14 +100,23 @@
 .likeIcon {
   display: flex;
   gap: 10px;
-  border-right: 1px solid black;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
   display: flex;
   align-items: center;
+  &:hover {
+    background-color: gainsboro;
+  }
+}
+
+.likeButton {
+  color: green;
 }
 
 .vtLikeNumber {
   font-weight: bold;
-  padding-right: 3px;
+
   display: flex;
   align-items: center;
 }
@@ -116,6 +124,16 @@
 .dislikeIcon {
   display: flex;
   align-items: center;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  &:hover {
+    background-color: gainsboro;
+  }
+}
+
+.dislikeButton {
+  color: red;
 }
 
 .videoAboutDescriptionBlock {

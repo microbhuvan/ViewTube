@@ -9,7 +9,15 @@ videoRouter.get("/getvideo/:id", videoController.getVideoById);
 videoRouter.get("/:userId/getuservideo", videoController.getUserVideo);
 
 videoRouter.put("/increment-views/:id", videoController.incrementViews);
-videoRouter.post("/video/:id/toggle-like", videoController.toggleLike);
-videoRouter.post("/video/:id/toggle-dislike", videoController.toggleDislike);
+videoRouter.post(
+  "/video/:id/toggle-like",
+  userAuth,
+  videoController.toggleLike
+);
+videoRouter.post(
+  "/video/:id/toggle-dislike",
+  userAuth,
+  videoController.toggleDislike
+);
 
 module.exports = videoRouter;

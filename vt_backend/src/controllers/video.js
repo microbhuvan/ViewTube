@@ -227,13 +227,14 @@ exports.toggleDislike = async (req, res) => {
       }
 
       disliked = true;
-
-      return res.status(200).json({
-        message: disliked ? "Video Disliked" : "Dislike Removed",
-        likes: video.like,
-        dislikes: video.dislike,
-      });
     }
+
+    await video.save();
+    return res.status(200).json({
+      message: disliked ? "Video Disliked" : "Dislike Removed",
+      likes: video.like,
+      dislikes: video.dislike,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "server error" });
