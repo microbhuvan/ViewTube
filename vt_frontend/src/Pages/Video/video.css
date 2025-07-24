@@ -89,6 +89,19 @@
   font-size: 16px;
 }
 
+.activateSubscribeButton {
+  color: purple;
+  background-color: gainsboro;
+  padding: 0px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  height: 36px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .vtVideoLikeBlock {
   display: flex;
   gap: 5px;

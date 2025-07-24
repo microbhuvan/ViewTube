@@ -167,13 +167,48 @@ const Video = () => {
       });
   };
 
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const handleSubscribeToggle = async () => {
+    if (!localStorage.getItem("userId")) {
+      toast.error("login to continue");
+      return;
+    }
+
+    const endpoint = isSubscribed ? "unsubscribe" : "subscribe";
+    await axios
+      .post(
+        `${BASE_URL}/auth/users/${endpoint}/${id}`,
+        {},
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        setIsSubscribed((prev) => !prev);
+        toast.success(
+          isSubscribed ? "Unsubscribed successfully" : "Subscribed successfully"
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     const userId = localStorage.getItem("userId");
+
+    //to check video likes
     if (videoData?.likedBy?.includes(userId)) {
       setIsLiked(true);
     }
     if (videoData?.dislikedBy?.includes(userId)) {
       setIsDisliked(true);
+    }
+
+    //to check subscribed or not
+    if (videoData?.user?.subscribers?.include(userId)) {
+      setIsSubscribed(true);
+    } else {
+      setIsSubscribed(false);
     }
   }, [id, videoData]);
 
@@ -225,7 +260,14 @@ const Video = () => {
                 </Link>
                 <div className="vtPostProfileSubs">34 subscribers</div>
               </div>
-              <div className="subscribeButton">Subscibe</div>
+              <div
+                className={
+                  isSubscribed ? "activateSubscribeButton" : "subscribeButton"
+                }
+                onClick={handleSubscribeToggle}
+              >
+                {isSubscribed ? "Unsubscribe" : "Subscribe"}
+              </div>
             </div>
 
             {/**rightblock PROFILE */}

@@ -2,6 +2,7 @@ const { User } = require("../models/user");
 const bcrypt = require("bcryptjs");
 const JWT = require("jsonwebtoken");
 require("dotenv").config();
+const { Video } = require("../models/video");
 
 exports.signUp = async (req, res) => {
   try {
@@ -80,4 +81,87 @@ exports.logIn = async (req, res) => {
 exports.logOut = async (req, res) => {
   res.cookie("token", null, { expiresIn: new Date(Date.now()) });
   return res.status(200).json({ message: "logout successfull" });
+};
+
+exports.subscribe = async (req, res) => {
+  try {
+    const userId = req.user.id; //user who is subscribing
+    const user = await User.findById(userId);
+
+    const videoId = req.params.videoId; //video id
+    const video = await Video.findById(videoId).populate(
+      "user",
+      "_id userName"
+    );
+    console.log("video", video);
+
+    if (!video) {
+      return res.status(404).json({ message: "video doesnt exist" });
+    }
+    if (!user) {
+      return res.status(404).json({ message: "user doesnt exist" });
+    }
+
+    const videoUserId = video.user._id;
+
+    if (videoUserId == userId) {
+      return res
+        .status(400)
+        .json({ message: "you cannot subscribe to yourself" });
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { subscribedTo: videoUserId }, //userId subscribing to channel videoId channel
+    });
+
+    await User.findByIdAndUpdate(videoUserId, {
+      $addToSet: { subscribers: userId }, //videoId channel getting new user
+    });
+    return res.status(200).json({ message: "subsribed successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json("error");
+  }
+};
+
+exports.unsubscribe = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    const videoId = req.params.videoId;
+
+    const video = await Video.findById(videoId).populate(
+      "user",
+      "_id userName"
+    );
+
+    if (!video) {
+      return res.status(404).json({ message: "video doesnt exist" });
+    }
+    if (!user) {
+      return res.status(404).json({ message: "user doesnt exist" });
+    }
+
+    const videoUserId = video.user._id;
+
+    if (videoUserId == userId) {
+      return res
+        .status(400)
+        .json({ message: "you cannot subscribe to yourself" });
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { subscribedTo: videoUserId },
+    });
+
+    await User.findByIdAndUpdate(videoUserId, {
+      $pull: { subscribers: userId },
+    });
+
+    return res.status(200).json({ message: "unsubsribed successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json("error");
+  }
 };

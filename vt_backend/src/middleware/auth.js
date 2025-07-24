@@ -7,14 +7,14 @@ const userAuth = async (req, res, next) => {
 
   const token = req.cookies.token;
 
-  console.log(token);
   if (!token) {
     return res.status(401).json({ error: "authorization error" });
   } else {
     try {
       const userId = await JWT.verify(token, process.env.JWT_SECRET);
-      const { id } = userId;
+      console.log(userId);
 
+      const { id } = userId;
       const user = await User.findById(id);
 
       if (!user) {
@@ -22,6 +22,7 @@ const userAuth = async (req, res, next) => {
       }
 
       req.user = user;
+      console.log("exiting auth");
       next();
     } catch (err) {
       return res.status(500).json({ error: "server error" });
