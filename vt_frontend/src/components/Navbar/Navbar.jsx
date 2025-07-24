@@ -1,16 +1,14 @@
 import "./navbar.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import MicIcon from "@mui/icons-material/Mic";
 import SearchIcon from "@mui/icons-material/Search";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
-import NotificationsActiveRoundedIcon from "@mui/icons-material/NotificationsActiveRounded";
-import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import Login from "../Login/Login";
 import { BASE_URL } from "../../utils/constant";
+import axios from "axios";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   const [userPic, setUserPic] = useState(
@@ -18,24 +16,26 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   );
   const [navbarModel, setNavbarModel] = useState(false);
   const [login, setLogin] = useState(false);
-  const [navbarLoginView, setNavbarLoginView] = useState(false); //this is for navbar width setting for login page
+  const [navbarLoginView, setNavbarLoginView] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); //this is for checking actual login
-
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
+
   const handleProfile = () => {
-    let userId = localStorage.getItem("userId");
-    navigate(`/user/${userId}`);
-    console.log("userid from navbar", userId);
-    setNavbarModel(false);
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      navigate(`/user/${userId}`);
+      setNavbarModel(false);
+    }
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     setNavbarModel((prev) => !prev);
   };
 
-  const sideNavbarFunc = () => {
+  const sideNavbarFuncLocal = () => {
     setSideNavbarFunc(!sideNavbar);
   };
 
@@ -45,14 +45,15 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   };
 
   const setLogoutFunc = async () => {
-    await axios
-      .post(`${BASE_URL}/auth/logout`, {}, { withCredentials: true })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios.post(
+        `${BASE_URL}/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onClickOfPopUpOption = (button) => {
@@ -66,54 +67,69 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
       setTimeout(() => {
         navigate("/");
         window.location.reload();
-      }, 1000);
+      }, 500);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
   useEffect(() => {
-    let userProfilePic = localStorage.getItem("userProfilePic");
-    console.log(localStorage.getItem("userId") !== null ? true : false);
-    setIsLoggedIn(localStorage.getItem("userId") !== null ? true : false);
-
-    if (userProfilePic !== null) {
+    const userProfilePic = localStorage.getItem("userProfilePic");
+    setIsLoggedIn(localStorage.getItem("userId") !== null);
+    if (userProfilePic) {
       setUserPic(userProfilePic);
     }
   }, []);
 
   return (
     <div className={navbarLoginView ? "navbarFull" : "navbar"}>
+      {/* Left */}
       <div className="navbar-left">
-        <div className="navbarHamburger" onClick={sideNavbarFunc}>
+        <div className="navbarHamburger" onClick={sideNavbarFuncLocal}>
           <MenuIcon sx={{ fontSize: "30px" }} />
         </div>
-        <Link to={"/"} className="navbarHome">
+        <Link to="/" className="navbarHome">
           <PlayCircleIcon sx={{ fontSize: "30px" }} />
           <div className="navbarViewTube">ViewTube</div>
         </Link>
       </div>
+
+      {/* Middle */}
       <div className="navbar-middle">
         <div className="navbarSearchBox">
           <input
             type="text"
-            placeholder="search"
+            placeholder="Search videos or profiles"
             className="navbarInputSearch"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
-          <div className="navbarSearchIconBox">
+          <div className="navbarSearchIconBox" onClick={handleSearch}>
             <SearchIcon />
           </div>
         </div>
-        <div className="navbarMic">
-          <MicIcon sx={{ fontSize: "30px" }} />
-        </div>
       </div>
+
+      {/* Right */}
       <div className="navbar-right">
-        <Link to={"/322/upload"}>
+        <button className="themeToggleButton" onClick={toggleTheme}>
+          {theme === "light" ? "🌙" : "☀️"}
+        </button>
+        <Link to="/322/upload">
           <VideoCallIcon sx={{ fontSize: "30px" }} />
         </Link>
+        <img
+          src={userPic}
+          className="userPic"
+          onClick={handleClick}
+          alt="User"
+        />
 
-        <NotificationsActiveRoundedIcon sx={{ fontSize: "30px" }} />
-
-        <img src={userPic} className="userPic" onClick={handleClick} />
         {navbarModel && (
           <div className="navbarModel">
             {isLoggedIn && (
@@ -140,6 +156,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
           </div>
         )}
       </div>
+
       {login && <Login setLoginFunc={setLoginFunc} />}
     </div>
   );

@@ -229,3 +229,23 @@ exports.profileUnsubscribe = async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 };
+
+exports.getProfiles = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userArray = await User.findById(userId)
+      .select("subscribedTo")
+      .populate({
+        path: "subscribedTo",
+        select: "_id userName profilePic subscribers about",
+      });
+
+    console.log(userArray);
+    return res
+      .status(200)
+      .json({ message: "data fetched succssfully", userArray });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "server error" });
+  }
+};

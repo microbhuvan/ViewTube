@@ -13,6 +13,7 @@ import VideoUpload from "./Pages/VideoUpload/VideoUpload";
 import SignUp from "./Pages/SignUp/SignUp";
 
 import LikedVideos from "./Pages/LikedVideos/LikedVideos";
+import Subscription from "./Pages/Subscription/Subscription";
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(false);
@@ -20,6 +21,7 @@ function App() {
   const setSideNavbarFunc = (value) => {
     setSideNavbar(value);
   };
+  console.log("SideNavbar prop passing test", setSideNavbar);
   return (
     <div className="app">
       <Navbar setSideNavbarFunc={setSideNavbarFunc} sideNavbar={sideNavbar} />
@@ -30,7 +32,8 @@ function App() {
         <Route path="/user/:id" element={<Profile />} />
         <Route path="/:id/upload" element={<VideoUpload />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/liked" element={<LikedVideos />} />
+        <Route path="/liked/:userId" element={<LikedVideos />} />
+        <Route path="/subscribed/:userId" element={<Subscription />} />
       </Routes>
     </div>
   );

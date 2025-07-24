@@ -99,7 +99,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="profileTopSectionInfo">{`subscribers . ${profileData?.length} vidoes`}</div>
+          <div className="profileTopSectionInfo">{`${user?.subscribers?.length} subscribers . ${profileData?.length} vidoes`}</div>
           <div className="profileTopSectionDescription">{user?.about}</div>
         </div>
       </div>

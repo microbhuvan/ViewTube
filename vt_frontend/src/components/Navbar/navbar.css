@@ -1,4 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Luckiest+Guy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
+
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --border-color: #ddd;
+  --input-bg: #ffffff;
+  --input-border: #ccc;
+  --input-hover: #f0f0f0;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: white;
+  --border-color: #555;
+  --input-bg: #1f1f1f;
+  --input-border: #555;
+  --input-hover: #2c2c2c;
+}
 
 .navbar {
   display: flex;
@@ -11,139 +29,168 @@
   top: 0;
   z-index: 10;
   height: 56px;
-  border: 1px solid black;
-  background-color: white;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .navbarFull {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 0px;
+  padding: 10px 0px;
   box-sizing: border-box;
   width: 100%;
   position: fixed;
   top: 0;
   z-index: 10;
   height: 56px;
-  border: 1px solid black;
-  background-color: white;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.navbarFull {
+  padding: 10px 0px;
 }
 
 .navbar-left {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: fit-content;
-  gap: 5px;
   width: 25%;
-}
-
-.navbarHamburger {
   display: flex;
-  justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
-
-.navbarHome {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.navbarViewTube {
-  font-size: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Luckiest Guy", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/*middle navbar*/
 
 .navbar-middle {
   display: flex;
-  gap: 15px;
+  justify-content: center;
   width: 50%;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  width: 25%;
+  gap: 10px;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.navbarHamburger,
+.navbarHome {
+  cursor: pointer;
+  display: flex;
+}
+
+.navbarViewTube {
+  font-size: 24px;
+  font-family: "Luckiest Guy", cursive;
+  user-select: none;
 }
 
 .navbarSearchBox {
   display: flex;
   width: 80%;
+  max-width: 500px;
 }
 
 .navbarInputSearch {
-  width: 100%;
-  height: 40px;
+  flex: 1;
+  height: 36px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid var(--input-border);
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  border: 1px solid black;
-  font-size: 20px;
-  padding-left: 15px;
-  &::placeholder {
-    font-size: 20px;
-  }
+  padding-left: 12px;
+  font-size: 16px;
+}
+
+.navbarInputSearch::placeholder {
+  font-size: 16px;
 }
 
 .navbarSearchIconBox {
-  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  background: var(--input-hover);
+  border: 1px solid var(--input-border);
+  border-left: none;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  padding: 0 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
 }
 
-.navbarMic {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  border-radius: 50%;
-  cursor: pointer;
+.navbarSearchIconBox:hover {
+  background: #e0e0e0;
 }
 
-.navbarMic:hover {
-  background-color: gray;
-}
-
-/*right navbar*/
-.navbar-right {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 15px;
-  width: 25%;
-  position: relative;
+[data-theme="dark"] .navbarSearchIconBox:hover {
+  background: #333;
 }
 
 .userPic {
-  width: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .navbarModel {
   position: absolute;
   top: 40px;
-  width: fit-content;
-  z-index: 20;
-  border-radius: 10px;
+  right: 0;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbarModelOption {
-  padding: 10px;
-  font-size: 20px;
-  text-align-last: right;
-  background-color: white;
+  padding: 10px 15px;
   cursor: pointer;
-  border: 1px solid black;
+  font-size: 16px;
+}
+
+.navbarModelOption:hover {
+  background: var(--input-hover);
+}
+
+.themeToggleButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    width: 50%;
+    justify-content: center;
+    margin: 5px 0;
+  }
+
+  .navbar-middle {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin: 8px 0;
+  }
+
+  .navbarSearchBox {
+    width: 90%;
+  }
 }

@@ -21,6 +21,8 @@ authRouter.post(
   userController.profileUnsubscribe
 );
 
+authRouter.get("/users/getprofiles", userAuth, userController.getProfiles);
+
 module.exports = authRouter;
 
 // /auth

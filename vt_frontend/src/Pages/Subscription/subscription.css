@@ -1,1 +1,120 @@
-/*testing*/
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Luckiest+Guy&family=Poppins:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap");
+
+:root {
+  --background-color: #ffffff;
+  --color: #1c1c1c;
+  --card-background: #f8f8f8;
+  --border-color: #d1d1d1;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  --background-color: #121212;
+  --color: #e0e0e0;
+  --card-background: #1e1e1e;
+  --border-color: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+.subscriptionPage {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  background: var(--background-color);
+  color: var(--color);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+.subscriptionPageHeader {
+  font-size: 28px;
+  font-family: "Special Gothic Expanded One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color);
+  text-align: center;
+}
+
+.subscriptionPageProfileContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.subscriptionPageProfile {
+  display: flex;
+  align-items: center;
+  background: var(--card-background);
+  color: var(--color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px var(--shadow-color);
+  overflow: hidden;
+  width: 320px;
+  transition: transform 0.2s, background 0.3s, color 0.3s;
+}
+
+.subscriptionPageProfile:hover {
+  transform: translateY(-3px);
+}
+
+.subscriptionPageProfilePicContainer {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.subscriptionPageProfilePic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.subscriptionPageProfileAbout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  flex: 1;
+}
+
+.subscriptionPageProfileName {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color);
+}
+
+.subscriptionPageProfileInfo {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: var(--color);
+  opacity: 0.8;
+}
+
+.subscriptionPageProfileDescription {
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-size: 13px;
+  color: var(--color);
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+  .subscriptionPageProfile {
+    width: 100%;
+  }
+}

@@ -4,73 +4,90 @@ import VideoCallIcon from "@mui/icons-material/VideoCall";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import RecentActorsIcon from "@mui/icons-material/RecentActors";
-import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
-import HistoryIcon from "@mui/icons-material/History";
-import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
+
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+
 const SideNavbar = ({ sideNavbar }) => {
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+
+  const handleHomeClick = (e) => {
+    navigate("/");
+  };
+
+  const handleUploadClick = () => {
+    if (userId) {
+      navigate(`/${userId}/upload`);
+    } else {
+      toast.error("User not logged in!");
+    }
+  };
+
+  const handleYourChannelClick = () => {
+    if (userId) {
+      navigate(`/user/${userId}`);
+    } else {
+      toast.error("User not logged in!");
+    }
+  };
+
+  const handleLikedClick = () => {
+    if (userId) {
+      navigate(`/liked/${userId}`);
+    } else {
+      toast.error("User not logged in!");
+    }
+  };
+
+  const handleSubscribedClick = () => {
+    if (userId) {
+      navigate(`/subscribed/${userId}`);
+    } else {
+      toast.error("User not logged in!");
+    }
+  };
+
   return (
     <div className={sideNavbar ? "home-sideNavbar" : "home-sideNavbarHide"}>
       <div className="home-sideNavbarTop">
-        <div className="home-sideNavbarTopOption">
+        <div className="home-sideNavbarTopOption" onClick={handleHomeClick}>
           <HomeIcon />
           <div className="home-sideNavbarTopOptionTitle">Home</div>
         </div>
-        <div className="home-sideNavbarTopOption">
+        <div className="home-sideNavbarTopOption" onClick={handleUploadClick}>
           <VideoCallIcon />
-          <div className="home-sideNavbarTopOptionTitle">Shorts</div>
+          <div className="home-sideNavbarTopOptionTitle">Video Upload</div>
         </div>
-        <div className="home-sideNavbarTopOption">
+        <div
+          className="home-sideNavbarTopOption"
+          onClick={handleSubscribedClick}
+        >
           <SubscriptionsIcon />
           <div className="home-sideNavbarTopOptionTitle">Subscriptions</div>
         </div>
       </div>
 
-      {/*this is middle part */}
+      {/* Middle */}
       <div className="home-sideNavbarMiddle">
         <div className="home-sideNavbarMiddleOption">
           <div className="home-sideNavbarMiddleOptionTitle">Your</div>
           <ArrowForwardIosIcon sx={{ fontSize: "20px" }} />
         </div>
-        <div className="home-sideNavbarMiddleOption">
+        <div
+          className="home-sideNavbarMiddleOption"
+          onClick={handleYourChannelClick}
+        >
           <RecentActorsIcon />
           <div className="home-sideNavbarMiddleOptionTitle">Your Channel</div>
         </div>
-        <div className="home-sideNavbarMiddleOption">
-          <HistoryIcon />
-          <div className="home-sideNavbarMiddleOptionTitle">History</div>
-        </div>
-        <div className="home-sideNavbarMiddleOption">
-          <PlaylistPlayIcon />
-          <div className="home-sideNavbarMiddleOptionTitle">PlayList</div>
-        </div>
-        <div className="home-sideNavbarMiddleOption">
-          <SmartDisplayIcon />
-          <div className="home-sideNavbarMiddleOptionTitle">Your Videos</div>
-        </div>
-        <div className="home-sideNavbarMiddleOption">
-          <WatchLaterIcon />
-          <div className="home-sideNavbarMiddleOptionTitle">Watch Later</div>
-        </div>
-        <Link to={"/liked"} className="home-sideNavbarMiddleOption">
+        <div className="home-sideNavbarMiddleOption" onClick={handleLikedClick}>
           <ThumbUpAltIcon />
           <div className="home-sideNavbarMiddleOptionTitle">Liked Videos</div>
-        </Link>
-      </div>
-
-      {/*this is bottom part */}
-      <div className="home-sideNavbarBottom">
-        <div className="home-sideNavbarBottomOption">
-          <img src="" alt="image" className="home-sideBarImageLogo" />
-          <div className="home-sideNavbarBottomOptionTitle">chname1</div>
-        </div>
-        <div className="home-sideNavbarBottomOption">
-          <img src="" alt="image" className="home-sideBarImageLogo" />
-          <div className="home-sideNavbarBottomOptionTitle">chname2</div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
