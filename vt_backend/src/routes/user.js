@@ -7,15 +7,18 @@ authRouter.post("/signup", userController.signUp);
 authRouter.post("/login", userController.logIn);
 authRouter.post("/logout", userController.logOut);
 
+authRouter.post("/users/subscribe/:id", userAuth, userController.subscribe);
+authRouter.post("/users/unsubscribe/:id", userAuth, userController.unsubscribe);
+
 authRouter.post(
-  "/users/subscribe/:videoId",
+  "/users/subscribe/profile/:profileId",
   userAuth,
-  userController.subscribe
+  userController.profileSubscribe
 );
 authRouter.post(
-  "/users/unsubscribe/:videoId",
+  "/users/unsubscribe/profile/:profileId",
   userAuth,
-  userController.unsubscribe
+  userController.profileUnsubscribe
 );
 
 module.exports = authRouter;

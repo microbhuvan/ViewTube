@@ -190,6 +190,7 @@ const Video = () => {
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err?.response?.data?.message);
       });
   };
 
@@ -205,7 +206,7 @@ const Video = () => {
     }
 
     //to check subscribed or not
-    if (videoData?.user?.subscribers?.include(userId)) {
+    if (videoData?.user?.subscribers?.includes(userId)) {
       setIsSubscribed(true);
     } else {
       setIsSubscribed(false);
@@ -249,6 +250,7 @@ const Video = () => {
                 <img
                   src={videoData?.user?.profilePic}
                   className="videoProfileBlockLeftPic"
+                  alt="profile pic"
                 ></img>
               </Link>
               <div className="vtVideoSubView">

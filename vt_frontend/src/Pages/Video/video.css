@@ -77,6 +77,12 @@
   color: gray;
 }
 
+.profileTopSectionTitleBlock {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .subscribeButton {
   background-color: gainsboro;
   padding: 0px 16px;

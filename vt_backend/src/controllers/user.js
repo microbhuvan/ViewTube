@@ -88,7 +88,7 @@ exports.subscribe = async (req, res) => {
     const userId = req.user.id; //user who is subscribing
     const user = await User.findById(userId);
 
-    const videoId = req.params.videoId; //video id
+    const videoId = req.params.id; //video id
     const video = await Video.findById(videoId).populate(
       "user",
       "_id userName"
@@ -129,7 +129,7 @@ exports.unsubscribe = async (req, res) => {
     const userId = req.user.id;
     const user = await User.findById(userId);
 
-    const videoId = req.params.videoId;
+    const videoId = req.params.id;
 
     const video = await Video.findById(videoId).populate(
       "user",
@@ -163,5 +163,69 @@ exports.unsubscribe = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json("error");
+  }
+};
+
+exports.profileSubscribe = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const loggedInUser = await User.findById(userId);
+    const profileId = req.params.profileId;
+    const profileUser = await User.findById(profileId);
+
+    if (!loggedInUser || !profileUser) {
+      return res.status(404).json({ message: "User doesn't exist" });
+    }
+
+    if (profileId == userId) {
+      return res
+        .status(400)
+        .json({ message: "You cannot subscribe to yourself" });
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { subscribedTo: profileId },
+    });
+
+    await User.findByIdAndUpdate(profileId, {
+      $addToSet: { subscribers: userId },
+    });
+
+    return res.status(200).json({ message: "Subscribed successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+exports.profileUnsubscribe = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const loggedInUser = await User.findById(userId);
+    const profileId = req.params.profileId;
+    const profileUser = await User.findById(profileId);
+
+    if (!loggedInUser || !profileUser) {
+      return res.status(404).json({ message: "User doesn't exist" });
+    }
+
+    if (profileId == userId) {
+      return res
+        .status(400)
+        .json({ message: "You cannot unsubscribe from yourself" });
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { subscribedTo: profileId },
+    });
+
+    await User.findByIdAndUpdate(profileId, {
+      $pull: { subscribers: userId },
+    });
+
+    return res.status(200).json({ message: "Unsubscribed successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Server error" });
   }
 };

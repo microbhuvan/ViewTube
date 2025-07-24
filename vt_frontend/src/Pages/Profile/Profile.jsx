@@ -1,7 +1,7 @@
 import "./profile.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { toast, ToastContainer } from "react-toastify";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
@@ -16,6 +16,7 @@ const Profile = () => {
     await axios
       .get(BASE_URL + `/api/${id}/getuservideo`)
       .then((res) => {
+        console.log(res);
         console.log(res?.data?.video);
         setProfileData(res?.data?.video);
         setUser(res?.data?.video[0]?.user);
@@ -25,18 +26,79 @@ const Profile = () => {
       });
   };
 
+  const [isProfileSubscribed, setIsProfileSubscribed] = useState(false);
+
+  const handleSubscribeToggle = async () => {
+    if (!localStorage.getItem("userId")) {
+      toast.error("login to continue");
+      return;
+    }
+
+    const endpoint = isProfileSubscribed ? "unsubscribe" : "subscribe";
+    await axios
+      .post(
+        `${BASE_URL}/auth/users/${endpoint}/profile/${id}`,
+        {},
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+        setIsProfileSubscribed((prev) => !prev);
+        toast.success(
+          isProfileSubscribed
+            ? "Unsubscribed successfully"
+            : "Subscribed successfully"
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err?.response?.data?.message);
+      });
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!profileData || profileData.length === 0) {
+      setIsProfileSubscribed(false);
+      return;
+    }
+
+    if (profileData?.[0]?.user?.subscribers?.includes(userId)) {
+      setIsProfileSubscribed(true);
+    } else {
+      setIsProfileSubscribed(false);
+    }
+  }, [id, profileData]);
+
   useEffect(() => {
     fetchProfileData();
-  }, []);
+  }, [id]);
 
   return (
     <div className="profilePage">
       <div className="profileTopSection">
         <div className="profileTopSectionProfile">
-          <img src={user?.profilePic} className="profileTopSectionImg"></img>
+          <img
+            src={user?.profilePic}
+            className="profileTopSectionImg"
+            alt="profile image"
+          ></img>
         </div>
         <div className="profileTopSectionAbout">
-          <div className="profileTopSectionAboutName">{user?.userName}</div>
+          <div className="profileTopSectionTitleBlock">
+            <div className="profileTopSectionAboutName">{user?.userName}</div>
+            <div
+              className={
+                isProfileSubscribed
+                  ? "profileActivateSubscribeButton"
+                  : "profileSubscribeButton"
+              }
+              onClick={handleSubscribeToggle}
+            >
+              {isProfileSubscribed ? "Unsubscribe" : "Subscribe"}
+            </div>
+          </div>
+
           <div className="profileTopSectionInfo">{`subscribers . ${profileData?.length} vidoes`}</div>
           <div className="profileTopSectionDescription">{user?.about}</div>
         </div>
@@ -75,6 +137,7 @@ const Profile = () => {
           {/* */}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

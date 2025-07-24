@@ -26,6 +26,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   const handleProfile = () => {
     let userId = localStorage.getItem("userId");
     navigate(`/user/${userId}`);
+    console.log("userid from navbar", userId);
     setNavbarModel(false);
   };
 

@@ -67,7 +67,10 @@ const HomePage = ({ sideNavbar }) => {
                   <div className="vt-thumbnailTime">{video?.videoLength}</div>
                 </Link>
                 <div className="vt-titleBox">
-                  <Link to={"/user/1"} className="vt-titleBoxProfile">
+                  <Link
+                    to={`/user/${video?.user?._id}`}
+                    className="vt-titleBoxProfile"
+                  >
                     <img
                       src={video?.user?.profilePic}
                       alt="profile link"
@@ -77,7 +80,10 @@ const HomePage = ({ sideNavbar }) => {
 
                   <div className="vt-titleBoxTitle">
                     <div className="vt-videoTitle">{video?.title}</div>
-                    <Link to={"/user/1"} className="vt-videoChannelName">
+                    <Link
+                      to={`/user/${video?.user?._id}`}
+                      className="vt-videoChannelName"
+                    >
                       {video?.user?.userName}
                     </Link>
                     <div className="vt-videoViews">{`${video?.views} views`}</div>
