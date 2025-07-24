@@ -74,6 +74,35 @@ const Video = () => {
     }
   };
 
+  const incrementView = async () => {
+    await axios
+      .put(`${BASE_URL}/api/increment-views/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const [watchedSeconds, setWatchedSeconds] = useState(0);
+  const [viewCounted, setViewCounted] = useState(false);
+  const handleTimeUpdate = (e) => {
+    const currentTime = e.target.currentTime;
+    setWatchedSeconds(currentTime);
+
+    if (!viewCounted) {
+      const duration = e.target.duration;
+      if (
+        currentTime >= 30 ||
+        (duration <= 30 && currentTime >= duration * 0.5)
+      ) {
+        incrementView();
+        setViewCounted(true);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchVideoById();
     getCommentByVideoId();
@@ -87,7 +116,13 @@ const Video = () => {
       <div className="videoSection">
         <div className="videoContainer">
           {videoData && (
-            <video width="400" controls autoPlay className="video">
+            <video
+              width="400"
+              controls
+              autoPlay
+              className="video"
+              onTimeUpdate={handleTimeUpdate}
+            >
               <source src={videoData?.videoLink} type="video/mp4"></source>
               <source src={videoData?.videoLink} type="video/webm"></source>
               Your browser doesnt support video tag
@@ -132,7 +167,8 @@ const Video = () => {
           </div>
           <div className="videoAboutDescriptionBlock">
             <div className="uploadDate">
-              {videoData?.createdAt.slice(0, 10)}
+              <div>{`${videoData?.views} views`}</div>
+              <div>{videoData?.createdAt.slice(0, 10)}</div>
             </div>
             <div className="videoAboutDescription">
               {videoData?.description}

@@ -7,5 +7,6 @@ videoRouter.post("/video", userAuth, videoController.videoUpload);
 videoRouter.get("/allvideo", videoController.getAllVideo);
 videoRouter.get("/getvideo/:id", videoController.getVideoById);
 videoRouter.get("/:userId/getuservideo", videoController.getUserVideo);
+videoRouter.put("/increment-views/:id", videoController.incrementViews);
 
 module.exports = videoRouter;

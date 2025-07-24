@@ -80,7 +80,7 @@ const HomePage = ({ sideNavbar }) => {
                     <Link to={"/user/1"} className="vt-videoChannelName">
                       {video?.user?.userName}
                     </Link>
-                    <div className="vt-videoViews">3 views</div>
+                    <div className="vt-videoViews">{`${video?.views} views`}</div>
                   </div>
                 </div>
               </div>
