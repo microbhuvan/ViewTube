@@ -63,9 +63,10 @@ const SignUp = () => {
       .post(`${BASE_URL}/auth/signup`, signUpField)
       .then((res) => {
         console.log(res);
-        toast.success(res?.data?.message);
+
         setProgressBar(false);
-        navigate("/");
+        toast.success("Account created successfully. Please log in.");
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);

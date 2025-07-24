@@ -9,6 +9,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import { Link } from "react-router-dom";
 const SideNavbar = ({ sideNavbar }) => {
   return (
     <div className={sideNavbar ? "home-sideNavbar" : "home-sideNavbarHide"}>
@@ -53,10 +54,10 @@ const SideNavbar = ({ sideNavbar }) => {
           <WatchLaterIcon />
           <div className="home-sideNavbarMiddleOptionTitle">Watch Later</div>
         </div>
-        <div className="home-sideNavbarMiddleOption">
+        <Link to={"/liked"} className="home-sideNavbarMiddleOption">
           <ThumbUpAltIcon />
           <div className="home-sideNavbarMiddleOptionTitle">Liked Videos</div>
-        </div>
+        </Link>
       </div>
 
       {/*this is bottom part */}

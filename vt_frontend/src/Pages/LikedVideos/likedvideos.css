@@ -1,1 +1,55 @@
-/* testin*/
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Luckiest+Guy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Comfortaa:wght@300..700&family=Luckiest+Guy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Expanded+One&display=swap");
+
+.likedVideoPage {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 92vh;
+  gap: 20px;
+}
+
+.header {
+  font-size: 32px;
+  font-family: "Special Gothic Expanded One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: flex;
+  justify-content: center;
+}
+
+.videoContainer {
+  width: 100%;
+  padding-left: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  box-sizing: border-box;
+}
+
+.video {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.thumbnail {
+  width: 350px;
+  height: 200px;
+}
+
+.thumbnailImage {
+  width: 350px;
+  height: 200px;
+}
+
+.videoInfo {
+  display: flex;
+  gap: 5px;
+}
+
+.profileImage {
+  height: 40px;
+  width: 40px;
+}

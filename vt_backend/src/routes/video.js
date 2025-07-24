@@ -19,5 +19,6 @@ videoRouter.post(
   userAuth,
   videoController.toggleDislike
 );
+videoRouter.get("/liked-videos", userAuth, videoController.getLikedVideos);
 
 module.exports = videoRouter;

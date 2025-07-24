@@ -106,6 +106,10 @@ const Video = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const handleLike = async () => {
+    if (!localStorage.getItem("userId")) {
+      toast.error("login to continue");
+      return;
+    }
     await axios
       .post(
         `${BASE_URL}/api/video/${id}/toggle-like`,
@@ -133,6 +137,10 @@ const Video = () => {
   };
 
   const handleDislike = async () => {
+    if (!localStorage.getItem("userId")) {
+      toast.error("login to continue");
+      return;
+    }
     await axios
       .post(
         `${BASE_URL}/api/video/${id}/toggle-dislike`,

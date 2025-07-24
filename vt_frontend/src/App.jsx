@@ -12,6 +12,8 @@ import Profile from "./Pages/Profile/Profile";
 import VideoUpload from "./Pages/VideoUpload/VideoUpload";
 import SignUp from "./Pages/SignUp/SignUp";
 
+import LikedVideos from "./Pages/LikedVideos/LikedVideos";
+
 function App() {
   const [sideNavbar, setSideNavbar] = useState(false);
 
@@ -28,6 +30,7 @@ function App() {
         <Route path="/user/:id" element={<Profile />} />
         <Route path="/:id/upload" element={<VideoUpload />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/liked" element={<LikedVideos />} />
       </Routes>
     </div>
   );
