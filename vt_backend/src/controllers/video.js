@@ -1,57 +1,16 @@
 require("dotenv").config();
 const { Video } = require("../models/video");
 const { User } = require("../models/user");
-const ffprobePath = require("ffprobe-static").path;
-const { spawn } = require("child_process");
 
 exports.videoUpload = async (req, res) => {
   try {
-    console.log("received video uploads 0");
-    const { title, description, category, thumbnail, videoLink } = req.body;
-    console.log("received video uploads 1");
+    console.log("Received video upload request");
+    const { title, description, category, thumbnail, videoLink, videoLength } =
+      req.body;
+
     const reqUser = req.user;
 
-    console.log("received video uploads 2");
-    const testUrl =
-      req.body.videoLink ||
-      "https://res.cloudinary.com/yourcloud/video/upload/sample.mp4";
-    console.log("received video uplload 3");
-    //to get video duration
-
-    console.log("before ffbrobe");
-    function getVideoDuration(filePath) {
-      return new Promise((resolve, reject) => {
-        const ffprobe = spawn(ffprobePath, [
-          "-v",
-          "error",
-          "-show_entries",
-          "format=duration",
-          "-of",
-          "json",
-          filePath,
-        ]);
-
-        let data = "";
-        ffprobe.stdout.on("data", (chunk) => {
-          data += chunk;
-        });
-
-        ffprobe.stderr.on("data", (err) => {
-          console.error(`ffprobe error: ${err.toString()}`);
-        });
-
-        ffprobe.on("close", (code) => {
-          if (code !== 0) {
-            reject(new Error(`ffprobe exited with code ${code}`));
-          } else {
-            const parsed = JSON.parse(data);
-            resolve(parseFloat(parsed.format.duration));
-          }
-        });
-      });
-    }
-
-    console.log("after ffprobe");
+    // Format duration received from frontend
     function formatDuration(seconds) {
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
@@ -60,25 +19,16 @@ exports.videoUpload = async (req, res) => {
       if (h > 0) {
         return `${h}:${m.toString().padStart(2, "0")}:${s
           .toString()
-          .padStart(2, "0")}}`;
+          .padStart(2, "0")}`;
       } else {
         return `${m}:${s.toString().padStart(2, "0")}`;
       }
     }
 
-    console.log("before duration in seconds");
-    try {
-      const durationInSeconds = await getVideoDuration(testUrl);
-      const videoDuration = await formatDuration(durationInSeconds);
-    } catch (error) {
-      console.error("Error while getting video duration:", error);
-      return res
-        .status(500)
-        .json({ error: "Failed to get video duration", detail: error.message });
-    }
+    const videoDuration = formatDuration(videoLength || 0);
 
     const video = new Video({
-      user: reqUser.id,
+      user: reqUser._id,
       title,
       description,
       category,
@@ -86,15 +36,17 @@ exports.videoUpload = async (req, res) => {
       videoLink,
       videoLength: videoDuration,
     });
-    console.log(video);
+
     await video.save();
+
     return res.status(200).json({
-      message: "video uploaded successfully",
+      message: "Video uploaded successfully",
       success: true,
-      video: video,
+      video,
     });
   } catch (err) {
-    return res.status(500).json({ error: "server error" });
+    console.error(err);
+    return res.status(500).json({ error: "Server error during video upload" });
   }
 };
 

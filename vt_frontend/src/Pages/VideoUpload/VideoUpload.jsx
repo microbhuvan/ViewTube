@@ -33,8 +33,8 @@ const VideoUpload = () => {
     const data = new FormData();
     data.append("file", files[0]);
     data.append("folder", "viewtube");
-    //ViewTube
     data.append("upload_preset", "ViewTube");
+
     try {
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${
@@ -44,11 +44,25 @@ const VideoUpload = () => {
       );
 
       setLoader(false);
-      const url = res.data.secure_url;
-      let val = type === "image" ? "thumbnail" : "videoLink";
-      setInputField({ ...inputField, [val]: url });
 
-      console.log(res);
+      const { secure_url, duration } = res.data;
+      let val = type === "image" ? "thumbnail" : "videoLink";
+
+      if (type === "video") {
+        // store duration in inputField
+        setInputField((prev) => ({
+          ...prev,
+          [val]: secure_url,
+          videoLength: duration, // pass duration directly
+        }));
+      } else {
+        setInputField((prev) => ({
+          ...prev,
+          [val]: secure_url,
+        }));
+      }
+
+      console.log(res.data);
     } catch (err) {
       setLoader(false);
       console.log(err);
