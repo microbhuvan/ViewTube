@@ -146,9 +146,16 @@ const VideoUpload = () => {
           {loader && <CircularProgress disableShrink />}
         </div>
         <div className="uploadBtns">
-          <div className="uploadBtn-form" onClick={handleUploadFunc}>
+          <div
+            className="uploadBtn-form"
+            onClick={() => {
+              console.log("UPLOAD BUTTON CLICKED");
+              handleUploadFunc();
+            }}
+          >
             Upload
           </div>
+
           <div className="uploadBtn-form" onClick={() => navigate("/")}>
             Home
           </div>
