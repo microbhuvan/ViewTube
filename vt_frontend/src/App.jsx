@@ -14,6 +14,7 @@ import SignUp from "./Pages/SignUp/SignUp";
 
 import LikedVideos from "./Pages/LikedVideos/LikedVideos";
 import Subscription from "./Pages/Subscription/Subscription";
+import SearchPage from "./Pages/SearchPage/SearchPage";
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(false);
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/liked/:userId" element={<LikedVideos />} />
         <Route path="/subscribed/:userId" element={<Subscription />} />
+        <Route path="/search" element={<SearchPage />} />
       </Routes>
     </div>
   );

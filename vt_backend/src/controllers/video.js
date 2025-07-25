@@ -302,3 +302,26 @@ exports.getSuggestedVideos = async (req, res) => {
     return res.status(500).json({ error: "server error" });
   }
 };
+
+exports.videosSearch = async (req, res) => {
+  const query = req.query.q;
+
+  if (!query) {
+    return res.status(400).json({ message: "query parameter q is required" });
+  }
+
+  try {
+    const videos = await Video.find({
+      title: { $regex: query, $options: "i" },
+    });
+
+    if (videos.length === 0) {
+      res.status(404).json({ message: "videos doesnt exist" });
+    }
+
+    return res.status(200).json(videos);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "server error" });
+  }
+};

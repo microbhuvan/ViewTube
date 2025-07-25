@@ -23,4 +23,6 @@ videoRouter.get("/liked-videos", userAuth, videoController.getLikedVideos);
 
 videoRouter.get("/suggestedvideos/:id", videoController.getSuggestedVideos);
 
+videoRouter.get("/videos/search", videoController.videosSearch);
+
 module.exports = videoRouter;
