@@ -249,3 +249,19 @@ exports.getProfiles = async (req, res) => {
     return res.status(500).json({ error: "server error" });
   }
 };
+
+exports.getUserData = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+
+    return res.status(200).json({ user: user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "server error" });
+  }
+};

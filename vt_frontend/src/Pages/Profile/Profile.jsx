@@ -12,14 +12,18 @@ const Profile = () => {
 
   const { id } = useParams();
 
-  const fetchProfileData = async () => {
+  const fetchProfileData = async (req, res) => {
+    await axios.get(`${BASE_URL}/auth/user/${id}`).then((res) => {
+      console.log(res);
+      setUser(res?.data?.user);
+    });
+  };
+
+  const fetchProfileVideoData = async () => {
     await axios
       .get(BASE_URL + `/api/${id}/getuservideo`)
       .then((res) => {
-        console.log(res);
-        console.log(res?.data?.video);
         setProfileData(res?.data?.video);
-        setUser(res?.data?.video[0]?.user);
       })
       .catch((err) => {
         console.log(err);
@@ -68,10 +72,11 @@ const Profile = () => {
     } else {
       setIsProfileSubscribed(false);
     }
-  }, [id, profileData]);
+  }, [id, profileData, user]);
 
   useEffect(() => {
     fetchProfileData();
+    fetchProfileVideoData();
   }, [id]);
 
   return (

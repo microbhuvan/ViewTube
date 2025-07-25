@@ -23,6 +23,8 @@ authRouter.post(
 
 authRouter.get("/users/getprofiles", userAuth, userController.getProfiles);
 
+authRouter.get("/user/:id", userAuth, userController.getUserData);
+
 module.exports = authRouter;
 
 // /auth
