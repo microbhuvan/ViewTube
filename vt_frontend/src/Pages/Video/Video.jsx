@@ -405,7 +405,7 @@ const Video = () => {
                   {suggestedvideo?.user?.userName}
                 </div>
                 <div className="videoSuggetionAboutViews">
-                  {suggestedvideo?.views}
+                  {suggestedvideo?.views} views
                 </div>
               </div>
             </Link>

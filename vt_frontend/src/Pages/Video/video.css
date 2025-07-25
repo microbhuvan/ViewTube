@@ -1,8 +1,8 @@
 .videoPage {
   margin-top: 56px;
   display: flex;
-  gap: 10px;
-  padding: 30px 10px;
+  gap: 5px;
+  padding: 30px 5px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -11,8 +11,18 @@
   width: 65%;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: var(--card-bg);
+
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   box-sizing: border-box;
+}
+
+.videoSection:hover {
+  box-shadow: var(--card-hover-shadow);
+  transform: translateY(-2px);
 }
 
 .videoContainer {
@@ -163,9 +173,7 @@
 .videoAboutDescriptionBlock {
   display: flex;
   flex-direction: column;
-  padding: 10px;
   gap: 10px;
-  background-color: #a5a5a538;
   width: 100%;
   border-radius: 10px;
   padding: 12px;
@@ -173,6 +181,16 @@
   margin-top: 10px;
   box-sizing: border-box;
   font-weight: bold;
+
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.videoAboutDescriptionBlock:hover {
+  box-shadow: var(--card-hover-shadow);
 }
 
 .videoCommentSection {
@@ -210,13 +228,20 @@
   height: 35px;
   border: none;
   font-size: 16px;
-  border-bottom: 1px solid gray;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    font-size: 16px;
-  }
+  border-bottom: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-color);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.addCommentInput:focus {
+  outline: none;
+  border-bottom: 1px solid var(--accent-color);
+}
+
+.addCommentInput::placeholder {
+  font-size: 16px;
+  color: var(--placeholder-color);
 }
 
 .cancelSubmitComment {
@@ -229,8 +254,18 @@
 .commentButton {
   padding: 8px 16px;
   border-radius: 18px;
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.commentButton:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--button-hover-text-color);
+  transform: translateY(-1px);
 }
 
 .othersCommentsSection {
@@ -268,17 +303,31 @@
 
 .videoSuggetion {
   width: 35%;
-  padding: 10px 15px;
-  gap: 15px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  padding: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-sizing: border-box;
+}
+.videoSuggetion:hover {
+  box-shadow: var(--card-hover-shadow);
+  transform: translateY(-2px);
 }
 
 .videoSuggetionBlock {
   display: flex;
-  gap: 15px;
-  cursor: pointer;
+  gap: 12px;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.videoSuggetionBlock:hover {
+  background-color: var(--hover-bg);
 }
 
 .videoSuggetionThumbnail {
@@ -316,13 +365,14 @@
     margin-top: 120px;
     display: flex;
     flex-direction: column;
-    padding: 10px 5px;
+    padding: 2px;
     width: 100%;
     box-sizing: border-box;
   }
 
   .videoSection {
     width: 100%;
+    padding: 2px;
   }
 
   .videoSuggetion {
