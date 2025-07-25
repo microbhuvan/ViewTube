@@ -24,15 +24,10 @@ exports.signUp = async (req, res) => {
       });
 
       await user.save();
-      const token = await JWT.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "1d",
-      });
-      res.cookie("token", token, { httpOnly: true });
 
       return res.status(201).json({
         message: "user registered successfully",
         success: true,
-        token: token,
       });
     }
   } catch (err) {
@@ -58,7 +53,12 @@ exports.logIn = async (req, res) => {
           }
         );
         console.log("from login", token);
-        res.cookie("token", token, { httpOnly: true });
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+          maxAge: 24 * 60 * 60 * 1000,
+        });
         const user = logInUser;
 
         return res.status(200).json({
