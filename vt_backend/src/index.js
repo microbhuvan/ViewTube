@@ -5,9 +5,13 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
 
+const allowedOrigins = (
+  process.env.FRONTEND_URL || "http://localhost:5173"
+).split(",");
+
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL || "http://localhost:5173"],
+    origin: allowedOrigins,
     credentials: true,
   })
 );
