@@ -57,7 +57,7 @@ exports.logIn = async (req, res) => {
             expiresIn: "1d",
           }
         );
-        console.log(token);
+        console.log("from login", token);
         res.cookie("token", token, { httpOnly: true });
         const user = logInUser;
 

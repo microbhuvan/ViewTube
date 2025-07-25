@@ -5,9 +5,11 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
 
-const allowedOrigins = (
-  process.env.FRONTEND_URL || "http://localhost:5173"
-).split(",");
+// const allowedOrigins = (
+//   process.env.FRONTEND_URL || "http://localhost:5173"
+// ).split(",");
+
+const allowedOrigins = "http://localhost:5173";
 
 app.use(
   cors({
@@ -30,7 +32,7 @@ app.use("/commentApi", commentRouter);
 connectDB()
   .then(() => {
     console.log("database connected successfully");
-    app.listen(process.env.PORT, () => {
+    app.listen(5000, () => {
       console.log("server started");
     });
   })

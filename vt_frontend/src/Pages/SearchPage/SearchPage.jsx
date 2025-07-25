@@ -15,7 +15,9 @@ const SearchPage = () => {
     try {
       setLoading(true);
       await axios
-        .get(`${BASE_URL}/api/videos/search?q=${query}`)
+        .get(`${BASE_URL}/api/videos/search?q=${query}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           console.log(res);
           setSearchVideos(res?.data);

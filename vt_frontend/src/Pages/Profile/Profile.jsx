@@ -14,7 +14,7 @@ const Profile = () => {
 
   const fetchProfileData = async (req, res) => {
     await axios
-      .get(`${BASE_URL}/auth/user/${id}`)
+      .get(`${BASE_URL}/auth/user/${id}`, { withCredentials: true })
       .then((res) => {
         console.log(res);
         setUser(res?.data?.user);
@@ -26,7 +26,7 @@ const Profile = () => {
 
   const fetchProfileVideoData = async () => {
     await axios
-      .get(BASE_URL + `/api/${id}/getuservideo`)
+      .get(BASE_URL + `/api/${id}/getuservideo`, { withCredentials: true })
       .then((res) => {
         setProfileData(res?.data?.video);
       })

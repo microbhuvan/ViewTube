@@ -42,6 +42,7 @@ const VideoUpload = () => {
         }/${type}/upload`,
         data
       );
+
       setLoader(false);
       const url = res.data.url;
       let val = type === "image" ? "thumbnail" : "videoLink";

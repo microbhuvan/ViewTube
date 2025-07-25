@@ -28,7 +28,6 @@
   width: 100%;
   max-width: 1200px;
   box-sizing: border-box;
-  border: 1px solid var(--border-color);
 }
 
 .likedVideo {
@@ -116,4 +115,10 @@
   font-size: 12px;
   font-family: "Poppins", sans-serif;
   color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .likedVideoPage {
+    margin-top: 120px;
+  }
 }

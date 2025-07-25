@@ -11,7 +11,7 @@ const HomePage = ({ sideNavbar }) => {
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     axios
-      .get(BASE_URL + "/api/allVideo")
+      .get(BASE_URL + "/api/allVideo", { withCredentials: true })
       .then((res) => {
         console.log(res.data.videos);
         setVideos(res.data.videos);

@@ -94,7 +94,8 @@
 }
 
 .subscribeButton {
-  background-color: gainsboro;
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
   padding: 0px 16px;
   display: flex;
   justify-content: center;
@@ -107,7 +108,7 @@
 
 .activateSubscribeButton {
   color: purple;
-  background-color: gainsboro;
+  background-color: var(--button-bg);
   padding: 0px 16px;
   display: flex;
   justify-content: center;

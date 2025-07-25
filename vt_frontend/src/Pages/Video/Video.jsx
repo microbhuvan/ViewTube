@@ -20,7 +20,7 @@ const Video = () => {
 
   const fetchVideoById = async () => {
     await axios
-      .get(BASE_URL + `/api/getvideo/${id}`)
+      .get(BASE_URL + `/api/getvideo/${id}`, { withCredentials: true })
       .then((res) => {
         console.log(res);
         setVideoData(res?.data?.video);
@@ -33,7 +33,7 @@ const Video = () => {
   const [suggestedvideos, setSuggestedvideos] = useState([]);
   const getSuggestedVideos = async () => {
     await axios
-      .get(`${BASE_URL}/api/suggestedvideos/${id}`)
+      .get(`${BASE_URL}/api/suggestedvideos/${id}`, { withCredentials: true })
       .then((res) => {
         console.log(res?.data?.videos);
         setSuggestedvideos(res?.data?.videos);
@@ -45,7 +45,7 @@ const Video = () => {
 
   const getCommentByVideoId = async (req, res) => {
     await axios
-      .get(BASE_URL + `/commentApi/comment/${id}`)
+      .get(BASE_URL + `/commentApi/comment/${id}`, { withCredentials: true })
       .then((res) => {
         console.log(res?.data?.comments);
         setComments(res?.data?.comments);
@@ -89,7 +89,11 @@ const Video = () => {
 
   const incrementView = async () => {
     await axios
-      .put(`${BASE_URL}/api/increment-views/${id}`)
+      .put(
+        `${BASE_URL}/api/increment-views/${id}`,
+        {},
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res);
       })

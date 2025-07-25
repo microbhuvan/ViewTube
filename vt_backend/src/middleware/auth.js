@@ -6,6 +6,7 @@ const userAuth = async (req, res, next) => {
   console.log("entering userAuth");
 
   const token = req.cookies.token;
+  console.log("token", token);
 
   if (!token) {
     return res.status(401).json({ error: "authorization error" });
@@ -13,8 +14,15 @@ const userAuth = async (req, res, next) => {
     try {
       const userId = await JWT.verify(token, process.env.JWT_SECRET);
 
+      console.log("userId", userId);
+
       const { id } = userId;
+
+      console.log("id", id);
+
       const user = await User.findById(id);
+
+      console.log("user", user);
 
       if (!user) {
         return res.status(400).json({ error: "user not found" });

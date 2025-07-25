@@ -41,7 +41,8 @@ const SignUp = () => {
         `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
         }/image/upload`,
-        data
+        data,
+        { withCredentials: true }
       );
 
       const imageUrl = res.data.url;
@@ -60,7 +61,7 @@ const SignUp = () => {
   const handleSignUp = async () => {
     setProgressBar(true);
     await axios
-      .post(`${BASE_URL}/auth/signup`, signUpField)
+      .post(`${BASE_URL}/auth/signup`, signUpField, { withCredentials: true })
       .then((res) => {
         console.log(res);
 
