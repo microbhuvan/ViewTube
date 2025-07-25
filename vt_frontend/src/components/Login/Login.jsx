@@ -34,7 +34,7 @@ const Login = ({ setLoginFunc }) => {
         toast.success(res?.data?.message);
 
         setTimeout(() => {
-          setLoginFunc(false);
+          setLoginFunc();
           window.location.reload();
         }, 1500);
       })
