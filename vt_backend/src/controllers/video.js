@@ -6,9 +6,16 @@ const { spawn } = require("child_process");
 
 exports.videoUpload = async (req, res) => {
   try {
+    console.log("received video uploads 0");
     const { title, description, category, thumbnail, videoLink } = req.body;
+    console.log("received video uploads 1");
     const reqUser = req.user;
 
+    console.log("received video uploads 2");
+    const testUrl =
+      req.body.videoLink ||
+      "https://res.cloudinary.com/yourcloud/video/upload/sample.mp4";
+    console.log("received video uplload 3");
     //to get video duration
     function getVideoDuration(filePath) {
       return new Promise((resolve, reject) => {
@@ -56,7 +63,7 @@ exports.videoUpload = async (req, res) => {
       }
     }
 
-    const durationInSeconds = await getVideoDuration(videoLink);
+    const durationInSeconds = await getVideoDuration(testUrl);
     const videoDuration = await formatDuration(durationInSeconds);
 
     const video = new Video({
