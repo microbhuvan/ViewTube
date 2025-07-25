@@ -65,8 +65,8 @@ const SignUp = () => {
         console.log(res);
 
         setProgressBar(false);
-        toast.success("Account created successfully. Please log in.");
-        navigate("/login");
+        toast.success("Account created successfully. Please log in again");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
