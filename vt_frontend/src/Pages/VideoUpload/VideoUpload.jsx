@@ -55,8 +55,12 @@ const VideoUpload = () => {
     }
   };
 
+  console.log("output before handle input func", inputField);
+  console.log("before handleupload function");
   const handleUploadFunc = async () => {
+    console.log("indside handle upload function");
     setProgressBar(true);
+    console.log("before printing input field");
     console.log("input field", inputField);
     await axios
       .post(`${BASE_URL}/api/video`, inputField, { withCredentials: true })
