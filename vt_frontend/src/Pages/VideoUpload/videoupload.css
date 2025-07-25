@@ -123,15 +123,6 @@
   transition: background-color 0.2s, transform 0.1s;
 }
 
-.uploadBtn-form:hover {
-  background: var(--button-hover);
-  transform: translateY(-2px);
-}
-
-.uploadBtn-form:active {
-  transform: translateY(0);
-}
-
 @media (max-width: 768px) {
   .videoUpload {
     margin-top: 110px;

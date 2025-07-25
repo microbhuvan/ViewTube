@@ -156,7 +156,13 @@ const VideoUpload = () => {
             Upload
           </button>
 
-          <div className="uploadBtn-form" onClick={() => navigate("/")}>
+          <div
+            className="uploadBtn-form"
+            onClick={() => {
+              console.log("home button");
+              navigate("/");
+            }}
+          >
             Home
           </div>
         </div>
