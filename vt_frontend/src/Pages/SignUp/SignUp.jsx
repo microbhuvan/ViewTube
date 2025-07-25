@@ -41,8 +41,7 @@ const SignUp = () => {
         `https://api.cloudinary.com/v1_1/${
           import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
         }/image/upload`,
-        data,
-        { withCredentials: true }
+        data
       );
 
       const imageUrl = res.data.url;
