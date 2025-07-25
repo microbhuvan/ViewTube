@@ -13,10 +13,15 @@ const Profile = () => {
   const { id } = useParams();
 
   const fetchProfileData = async (req, res) => {
-    await axios.get(`${BASE_URL}/auth/user/${id}`).then((res) => {
-      console.log(res);
-      setUser(res?.data?.user);
-    });
+    await axios
+      .get(`${BASE_URL}/auth/user/${id}`)
+      .then((res) => {
+        console.log(res);
+        setUser(res?.data?.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const fetchProfileVideoData = async () => {
