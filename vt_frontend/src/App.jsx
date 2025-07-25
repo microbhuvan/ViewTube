@@ -18,7 +18,7 @@ import SearchPage from "./Pages/SearchPage/SearchPage";
 
 function App() {
   const [sideNavbar, setSideNavbar] = useState(false);
-
+  //trigger deploy
   const setSideNavbarFunc = (value) => {
     setSideNavbar(value);
   };
