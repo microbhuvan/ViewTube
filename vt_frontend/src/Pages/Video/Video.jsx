@@ -120,64 +120,71 @@ const Video = () => {
   const [isDisliked, setIsDisliked] = useState(false);
   const handleLike = async () => {
     if (!localStorage.getItem("userId")) {
-      toast.error("login to continue");
+      toast.error("Login to continue");
       return;
     }
-    await axios
-      .post(
+    try {
+      const res = await axios.post(
         `${BASE_URL}/api/video/${id}/toggle-like`,
         {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        setVideoData((prev) => ({
-          ...prev,
-          like: res?.data?.likes,
-          dislike: res?.data?.dislikes,
-        }));
-        setIsLiked((prev) => !prev);
+        { withCredentials: true }
+      );
 
-        if (isDisliked) {
-          setIsDisliked(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      console.log(res);
+      const { likes, dislikes, message } = res.data;
+
+      setVideoData((prev) => ({
+        ...prev,
+        like: res?.data?.likes,
+        dislike: res?.data?.dislikes,
+        likedBy: res?.data?.likedBy,
+        dislikedBy: res?.data?.dislikedBy,
+      }));
+
+      // Use message to set correct state
+      if (message === "Video Liked") {
+        setIsLiked(true);
+        setIsDisliked(false);
+      } else if (message === "Like Removed") {
+        setIsLiked(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDislike = async () => {
     if (!localStorage.getItem("userId")) {
-      toast.error("login to continue");
+      toast.error("Login to continue");
       return;
     }
-    await axios
-      .post(
+    try {
+      const res = await axios.post(
         `${BASE_URL}/api/video/${id}/toggle-dislike`,
         {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        setVideoData((prev) => ({
-          ...prev,
-          like: res?.data?.likes,
-          dislike: res?.data?.dislikes,
-        }));
-        setIsDisliked((prev) => !prev);
+        { withCredentials: true }
+      );
 
-        if (isLiked) {
-          setIsLiked(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      console.log(res);
+      const { likes, dislikes, message } = res.data;
+
+      setVideoData((prev) => ({
+        ...prev,
+        like: res?.data?.likes,
+        dislike: res?.data?.dislikes,
+        likedBy: res?.data?.likedBy,
+        dislikedBy: res?.data?.dislikedBy,
+      }));
+
+      if (message === "Video Disliked") {
+        setIsDisliked(true);
+        setIsLiked(false);
+      } else if (message === "Dislike Removed") {
+        setIsDisliked(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -210,15 +217,18 @@ const Video = () => {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
 
-    //to check video likes
     if (videoData?.likedBy?.includes(userId)) {
       setIsLiked(true);
-    }
-    if (videoData?.dislikedBy?.includes(userId)) {
-      setIsDisliked(true);
+    } else {
+      setIsLiked(false);
     }
 
-    //to check subscribed or not
+    if (videoData?.dislikedBy?.includes(userId)) {
+      setIsDisliked(true);
+    } else {
+      setIsDisliked(false);
+    }
+
     if (videoData?.user?.subscribers?.includes(userId)) {
       setIsSubscribed(true);
     } else {

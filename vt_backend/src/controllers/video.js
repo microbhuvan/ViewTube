@@ -155,7 +155,6 @@ exports.toggleLike = async (req, res) => {
     const videoId = req.params.id;
 
     const video = await Video.findById(videoId);
-
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
     }
@@ -163,38 +162,50 @@ exports.toggleLike = async (req, res) => {
     let liked = false;
 
     if (video.likedBy.includes(userId)) {
-      //remove like if already exist
-      video.like -= 1;
-      video.likedBy.pull(userId);
-      await User.findByIdAndUpdate(userId, { $pull: { likedVideos: videoId } });
-      liked = false;
-    } else {
-      //add like
-      video.like += 1;
-      video.likedBy.push(userId);
-      await User.findByIdAndUpdate(userId, {
-        $addToSet: { likedVideos: videoId }, //ADDS ONLY UNIQUE VALUES
+      // If already liked, remove like
+      await Video.findByIdAndUpdate(videoId, {
+        $inc: { like: -1 },
+        $pull: { likedBy: userId },
       });
 
-      //remove dislike if any
+      await User.findByIdAndUpdate(userId, {
+        $pull: { likedVideos: videoId },
+      });
+
+      liked = false;
+    } else {
+      const updateOps = {
+        $inc: { like: 1 },
+        $addToSet: { likedBy: userId },
+      };
+
+      // If disliked before, remove dislike
       if (video.dislikedBy.includes(userId)) {
-        video.dislike -= 1;
-        video.dislikedBy.pull(userId);
+        updateOps.$inc.dislike = -1;
+        updateOps.$pull = { dislikedBy: userId };
       }
+
+      await Video.findByIdAndUpdate(videoId, updateOps);
+
+      await User.findByIdAndUpdate(userId, {
+        $addToSet: { likedVideos: videoId },
+      });
 
       liked = true;
     }
 
-    await video.save();
+    const updatedVideo = await Video.findById(videoId);
 
     return res.status(200).json({
       message: liked ? "Video Liked" : "Like Removed",
-      likes: video.like,
-      dislikes: video.dislike,
+      likes: updatedVideo.like,
+      dislikes: updatedVideo.dislike,
+      likedBy: updatedVideo.likedBy,
+      dislikedBy: updatedVideo.dislikedBy,
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: "server error" });
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -204,40 +215,50 @@ exports.toggleDislike = async (req, res) => {
     const videoId = req.params.id;
 
     const video = await Video.findById(videoId);
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
 
-    let disliked = true;
+    let disliked = false;
 
     if (video.dislikedBy.includes(userId)) {
-      //remove dislike if already exist
-      video.dislike -= 1;
-      video.dislikedBy.pull(userId);
+      // If already disliked, remove dislike
+      await Video.findByIdAndUpdate(videoId, {
+        $inc: { dislike: -1 },
+        $pull: { dislikedBy: userId },
+      });
       disliked = false;
     } else {
-      //add dislike
-      video.dislike += 1;
-      video.dislikedBy.push(userId);
+      const updateOps = {
+        $inc: { dislike: 1 },
+        $addToSet: { dislikedBy: userId },
+      };
 
-      //if liked before remove it
+      // If liked before, remove like
       if (video.likedBy.includes(userId)) {
-        video.like -= 1;
-        video.likedBy.pull(userId);
+        updateOps.$inc.like = -1;
+        updateOps.$pull = { ...updateOps.$pull, likedBy: userId };
         await User.findByIdAndUpdate(userId, {
           $pull: { likedVideos: videoId },
         });
       }
 
+      await Video.findByIdAndUpdate(videoId, updateOps);
       disliked = true;
     }
 
-    await video.save();
+    const updatedVideo = await Video.findById(videoId);
+
     return res.status(200).json({
       message: disliked ? "Video Disliked" : "Dislike Removed",
-      likes: video.like,
-      dislikes: video.dislike,
+      likes: updatedVideo.like,
+      dislikes: updatedVideo.dislike,
+      likedBy: updatedVideo.likedBy,
+      dislikedBy: updatedVideo.dislikedBy,
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: "server error" });
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
