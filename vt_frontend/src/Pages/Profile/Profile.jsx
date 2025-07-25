@@ -67,12 +67,12 @@ const Profile = () => {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-    if (!profileData || profileData.length === 0) {
+    if (!user || user?.subscribers?.length === 0) {
       setIsProfileSubscribed(false);
       return;
     }
 
-    if (profileData?.[0]?.user?.subscribers?.includes(userId)) {
+    if (user?.subscribers?.includes(userId)) {
       setIsProfileSubscribed(true);
     } else {
       setIsProfileSubscribed(false);

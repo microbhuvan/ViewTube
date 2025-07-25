@@ -40,6 +40,7 @@
   height: 36px;
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .profileActivateSubscribeButton {
@@ -53,6 +54,7 @@
   height: 36px;
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .profileTopSectionAbout {
@@ -84,7 +86,9 @@
 .profileVideoSectionTitle {
   display: flex;
   align-items: center;
+  font-size: 10px;
   color: var(--text-primary);
+  font-family: "Comfortaa", sans-serif;
 }
 
 .profileVideoContainer {
