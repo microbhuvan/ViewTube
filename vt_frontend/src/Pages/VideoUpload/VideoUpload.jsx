@@ -57,6 +57,7 @@ const VideoUpload = () => {
 
   const handleUploadFunc = async () => {
     setProgressBar(true);
+    console.log("input field", inputField);
     await axios
       .post(`${BASE_URL}/api/video`, inputField, { withCredentials: true })
       .then((res) => {
