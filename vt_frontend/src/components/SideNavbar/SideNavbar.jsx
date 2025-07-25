@@ -13,10 +13,6 @@ const SideNavbar = ({ sideNavbar }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
-  const handleHomeClick = (e) => {
-    navigate("/");
-  };
-
   const handleUploadClick = () => {
     if (userId) {
       navigate(`/${userId}/upload`);
@@ -52,10 +48,10 @@ const SideNavbar = ({ sideNavbar }) => {
   return (
     <div className={sideNavbar ? "home-sideNavbar" : "home-sideNavbarHide"}>
       <div className="home-sideNavbarTop">
-        <div className="home-sideNavbarTopOption" onClick={handleHomeClick}>
+        {/* <div className="home-sideNavbarTopOption" onClick={handleHomeClick}>
           <HomeIcon />
           <div className="home-sideNavbarTopOptionTitle">Home</div>
-        </div>
+        </div> */}
         <div className="home-sideNavbarTopOption" onClick={handleUploadClick}>
           <VideoCallIcon />
           <div className="home-sideNavbarTopOptionTitle">Video Upload</div>
@@ -71,16 +67,16 @@ const SideNavbar = ({ sideNavbar }) => {
 
       {/* Middle */}
       <div className="home-sideNavbarMiddle">
-        <div className="home-sideNavbarMiddleOption">
+        {/* <div className="home-sideNavbarMiddleOption">
           <div className="home-sideNavbarMiddleOptionTitle">Your</div>
           <ArrowForwardIosIcon sx={{ fontSize: "20px" }} />
-        </div>
+        </div> */}
         <div
           className="home-sideNavbarMiddleOption"
           onClick={handleYourChannelClick}
         >
           <RecentActorsIcon />
-          <div className="home-sideNavbarMiddleOptionTitle">Your Channel</div>
+          <div className="home-sideNavbarMiddleOptionTitle">Your channel</div>
         </div>
         <div className="home-sideNavbarMiddleOption" onClick={handleLikedClick}>
           <ThumbUpAltIcon />
