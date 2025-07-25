@@ -44,7 +44,7 @@ const VideoUpload = () => {
       );
 
       setLoader(false);
-      const url = res.data.url;
+      const url = res.data.secure_url;
       let val = type === "image" ? "thumbnail" : "videoLink";
       setInputField({ ...inputField, [val]: url });
 
