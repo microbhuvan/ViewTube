@@ -5,11 +5,11 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
 
-// const allowedOrigins = (
-//   process.env.FRONTEND_URL || "http://localhost:5173"
-// ).split(",");
+const allowedOrigins = (
+  process.env.FRONTEND_URL || "http://localhost:5173"
+).split(",");
 
-const allowedOrigins = "http://localhost:5173";
+// const allowedOrigins = "http://localhost:5173";
 
 app.use(
   cors({
