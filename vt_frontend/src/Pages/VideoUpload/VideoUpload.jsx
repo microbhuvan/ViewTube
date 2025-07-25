@@ -166,7 +166,7 @@ const VideoUpload = () => {
           </button>
         </div>
       </div>
-      {progressBar && <LinearProgress />}
+
       <ToastContainer />
     </div>
   );
