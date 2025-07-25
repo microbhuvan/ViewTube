@@ -130,6 +130,10 @@
   background: #333;
 }
 
+.videoUploadIcon {
+  cursor: pointer;
+}
+
 .userPic {
   width: 32px;
   height: 32px;

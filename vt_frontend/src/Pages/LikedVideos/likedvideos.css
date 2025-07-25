@@ -63,6 +63,18 @@
   display: block;
 }
 
+.likedVideoThumbnailTime {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: auto;
+  padding: 1px 2px;
+  background-color: gray;
+  border-radius: 5px;
+  color: white;
+  z-index: 10;
+}
+
 .likedVideoInfo {
   display: flex;
   align-items: flex-start;

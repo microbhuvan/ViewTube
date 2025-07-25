@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
 import { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 const HomePage = ({ sideNavbar }) => {
   //const options = ["all", "music"];
@@ -75,6 +76,7 @@ const HomePage = ({ sideNavbar }) => {
           {/** */}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

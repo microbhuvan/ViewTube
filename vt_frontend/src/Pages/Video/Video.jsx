@@ -396,6 +396,9 @@ const Video = () => {
                   alt="thumbnail"
                   className="videoSuggetionThumbnailImg"
                 ></img>
+                <div className="profileVideoThumbnailTime">
+                  {suggestedvideo?.videoLength}
+                </div>
               </div>
               <div className="videoSuggetionAbout">
                 <div className="videoSuggetionAboutTitle">

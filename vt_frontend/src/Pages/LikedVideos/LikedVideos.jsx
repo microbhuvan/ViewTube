@@ -40,6 +40,9 @@ const LikedVideos = () => {
                   alt="thumbnail image"
                   className="likedVideoThumbnailImage"
                 ></img>
+                <div className="profileVideoThumbnailTime">
+                  {video?.videoLength}
+                </div>
               </div>
               <div className="likedVideoInfo">
                 <div className="likedVideoProfile">

@@ -313,7 +313,7 @@ exports.videosSearch = async (req, res) => {
   try {
     const videos = await Video.find({
       title: { $regex: query, $options: "i" },
-    });
+    }).populate("user", "_id userName profilePic");
 
     if (videos.length === 0) {
       res.status(404).json({ message: "videos doesnt exist" });

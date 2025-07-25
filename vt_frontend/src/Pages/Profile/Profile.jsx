@@ -122,6 +122,9 @@ const Profile = () => {
                     alt="thumbnail"
                     className="profileVideoThumbnailImg"
                   ></img>
+                  <div className="profileVideoThumbnailTime">
+                    {profileVideo?.videoLength}
+                  </div>
                 </div>
                 <div className="profileVideoDetail">
                   <div className="profileVideoDetailTitle">

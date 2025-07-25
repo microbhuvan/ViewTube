@@ -53,6 +53,9 @@ const SearchPage = () => {
                   alt="thumbnail"
                   className="searchPageVideoThumbnailImage"
                 ></img>
+                <div className="searchPageVideoThumbnailTime">
+                  {searchVideo?.videoLength}
+                </div>
               </div>
               <div className="searchPageVideoInfo">
                 <div className="searchPageVideoInfoTitle">

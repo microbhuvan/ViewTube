@@ -9,6 +9,7 @@ import Login from "../Login/Login";
 import { BASE_URL } from "../../utils/constant";
 import axios from "axios";
 import { ThemeContext } from "../../context/ThemeContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   const [userPic, setUserPic] = useState(
@@ -77,6 +78,15 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     }
   };
 
+  const handleVideoUploadButton = async () => {
+    if (isLoggedIn) {
+      const userId = localStorage.getItem("userId");
+      navigate(`${userId}/upload`);
+    } else {
+      toast.error("login to upload video");
+    }
+  };
+
   useEffect(() => {
     const userProfilePic = localStorage.getItem("userProfilePic");
     setIsLoggedIn(localStorage.getItem("userId") !== null);
@@ -120,9 +130,9 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         <button className="themeToggleButton" onClick={toggleTheme}>
           {theme === "light" ? "🌙" : "☀️"}
         </button>
-        <Link to="/322/upload">
+        <div onClick={handleVideoUploadButton} className="videoUploadIcon">
           <VideoCallIcon sx={{ fontSize: "30px" }} />
-        </Link>
+        </div>
         <img
           src={userPic}
           className="userPic"
@@ -158,6 +168,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
       </div>
 
       {login && <Login setLoginFunc={setLoginFunc} />}
+      <ToastContainer />
     </div>
   );
 };
