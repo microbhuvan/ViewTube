@@ -17,6 +17,8 @@ exports.videoUpload = async (req, res) => {
       "https://res.cloudinary.com/yourcloud/video/upload/sample.mp4";
     console.log("received video uplload 3");
     //to get video duration
+
+    console.log("before ffbrobe");
     function getVideoDuration(filePath) {
       return new Promise((resolve, reject) => {
         const ffprobe = spawn(ffprobePath, [
@@ -35,7 +37,7 @@ exports.videoUpload = async (req, res) => {
         });
 
         ffprobe.stderr.on("data", (err) => {
-          console.error(`ffprobe error: ${err}`);
+          console.error(`ffprobe error: ${err.toString()}`);
         });
 
         ffprobe.on("close", (code) => {
@@ -49,6 +51,7 @@ exports.videoUpload = async (req, res) => {
       });
     }
 
+    console.log("after ffprobe");
     function formatDuration(seconds) {
       const h = Math.floor(seconds / 3600);
       const m = Math.floor((seconds % 3600) / 60);
@@ -63,8 +66,16 @@ exports.videoUpload = async (req, res) => {
       }
     }
 
-    const durationInSeconds = await getVideoDuration(testUrl);
-    const videoDuration = await formatDuration(durationInSeconds);
+    console.log("before duration in seconds");
+    try {
+      const durationInSeconds = await getVideoDuration(testUrl);
+      const videoDuration = await formatDuration(durationInSeconds);
+    } catch (error) {
+      console.error("Error while getting video duration:", error);
+      return res
+        .status(500)
+        .json({ error: "Failed to get video duration", detail: error.message });
+    }
 
     const video = new Video({
       user: reqUser.id,
