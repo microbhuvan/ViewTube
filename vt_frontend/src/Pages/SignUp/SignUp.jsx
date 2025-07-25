@@ -90,7 +90,7 @@ const SignUp = () => {
           <div className="userNameSignup">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Username / Channel name"
               value={signUpField.userName}
               onChange={(e) => handleInputField(e, "userName")}
               className="userNameSignupUsername"

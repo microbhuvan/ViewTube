@@ -60,7 +60,7 @@ const Login = ({ setLoginFunc }) => {
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
-              placeholder="Username"
+              placeholder="Username / Channel name"
               className="userNameLoginUsername"
             ></input>
           </div>
