@@ -302,9 +302,18 @@
   margin-bottom: 5px;
 }
 
-@media (max-width: 550px) {
+.videoPage {
+  margin-top: 56px;
+  display: flex;
+  gap: 10px;
+  padding: 30px 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
   .videoPage {
-    margin-top: 56px;
+    margin-top: 120px;
     display: flex;
     flex-direction: column;
     padding: 10px 5px;

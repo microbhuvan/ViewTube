@@ -30,6 +30,19 @@ const Video = () => {
       });
   };
 
+  const [suggestedvideos, setSuggestedvideos] = useState([]);
+  const getSuggestedVideos = async () => {
+    await axios
+      .get(`${BASE_URL}/api/suggestedvideos/${id}`)
+      .then((res) => {
+        console.log(res?.data?.videos);
+        setSuggestedvideos(res?.data?.videos);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const getCommentByVideoId = async (req, res) => {
     await axios
       .get(BASE_URL + `/commentApi/comment/${id}`)
@@ -215,11 +228,13 @@ const Video = () => {
 
   useEffect(() => {
     fetchVideoById();
+    getSuggestedVideos();
     getCommentByVideoId();
   }, [id]);
 
   console.log(videoData);
   console.log(videoData?.videoLink);
+  console.log("suggested videos", suggestedvideos);
 
   return (
     <div className="videoPage">
@@ -227,6 +242,7 @@ const Video = () => {
         <div className="videoContainer">
           {videoData && (
             <video
+              key={videoData?._id}
               width="400"
               controls
               autoPlay
@@ -357,56 +373,34 @@ const Video = () => {
         </div>
       </div>
       <div className="videoSuggetion">
-        <div className="videoSuggetionBlock">
-          <div className="videoSuggetionThumbnail">
-            <img
-              src="https://cdn.neowin.com/news/images/uploaded/2024/08/1723555868_youtube-logo.jpg"
-              alt="thumbnail"
-              className="videoSuggetionThumbnailImg"
-            ></img>
-          </div>
-          <div className="videoSuggetionAbout">
-            <div className="videoSuggetionAboutTitle">
-              the t20 world cup final ind vs sa watch now
-            </div>
-            <div className="videoSuggetionAboutProfile">cricket t20</div>
-            <div className="videoSuggetionAboutViews">30 views . 1 day ago</div>
-          </div>
-        </div>
-        {/**/}
-        <div className="videoSuggetionBlock">
-          <div className="videoSuggetionThumbnail">
-            <img
-              src="https://cdn.neowin.com/news/images/uploaded/2024/08/1723555868_youtube-logo.jpg"
-              alt="thumbnail"
-              className="videoSuggetionThumbnailImg"
-            ></img>
-          </div>
-          <div className="videoSuggetionAbout">
-            <div className="videoSuggetionAboutTitle">
-              the t20 world cup final ind vs sa watch now
-            </div>
-            <div className="videoSuggetionAboutProfile">cricket t20</div>
-            <div className="videoSuggetionAboutViews">30 views . 1 day ago</div>
-          </div>
-        </div>
-        {/**/}
-        <div className="videoSuggetionBlock">
-          <div className="videoSuggetionThumbnail">
-            <img
-              src="https://cdn.neowin.com/news/images/uploaded/2024/08/1723555868_youtube-logo.jpg"
-              alt="thumbnail"
-              className="videoSuggetionThumbnailImg"
-            ></img>
-          </div>
-          <div className="videoSuggetionAbout">
-            <div className="videoSuggetionAboutTitle">
-              the t20 world cup final ind vs sa watch now
-            </div>
-            <div className="videoSuggetionAboutProfile">cricket t20</div>
-            <div className="videoSuggetionAboutViews">30 views . 1 day ago</div>
-          </div>
-        </div>
+        {suggestedvideos?.map((suggestedvideo, index) => {
+          return (
+            <Link
+              to={`/watch/${suggestedvideo?._id}`}
+              className="videoSuggetionBlock"
+              key={suggestedvideo?._id}
+            >
+              <div className="videoSuggetionThumbnail">
+                <img
+                  src={suggestedvideo?.thumbnail}
+                  alt="thumbnail"
+                  className="videoSuggetionThumbnailImg"
+                ></img>
+              </div>
+              <div className="videoSuggetionAbout">
+                <div className="videoSuggetionAboutTitle">
+                  {suggestedvideo?.title}
+                </div>
+                <div className="videoSuggetionAboutProfile">
+                  {suggestedvideo?.user?.userName}
+                </div>
+                <div className="videoSuggetionAboutViews">
+                  {suggestedvideo?.views}
+                </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
       <ToastContainer />
     </div>

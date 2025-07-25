@@ -46,11 +46,9 @@
   font-weight: semi-bold;
   border-radius: 10px;
 }
-
 .homeMainPage {
-  padding-top: 90px;
+  padding-top: 40px;
 }
-
 .vt-videoContainer {
   display: grid;
   box-sizing: border-box;
@@ -147,6 +145,12 @@
 .vt-videoViews {
   padding-top: 1px;
   font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .homeMainPage {
+    padding-top: 90px;
+  }
 }
 
 @media (max-width: 330px) {

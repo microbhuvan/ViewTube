@@ -5,28 +5,7 @@ import { BASE_URL } from "../../utils/constant";
 import { useState, useEffect } from "react";
 
 const HomePage = ({ sideNavbar }) => {
-  const options = [
-    "all",
-    "music",
-    "cricket",
-    "movies",
-    "all",
-    "music",
-    "cricket",
-    "movies",
-    "all",
-    "music",
-    "cricket",
-    "movies",
-    "all",
-    "music",
-    "cricket",
-    "movies",
-    "all",
-    "music",
-    "cricket",
-    "movies",
-  ];
+  //const options = ["all", "music"];
 
   const [videos, setVideos] = useState([]);
   useEffect(() => {
@@ -44,13 +23,13 @@ const HomePage = ({ sideNavbar }) => {
   return (
     <div className={sideNavbar ? "homePage" : "homePageFull"}>
       {/**homepage scroll*/}
-      <div className="homePageOptions">
+      {/* <div className="homePageOptions">
         {options.map((option, index) => (
           <div key={index} className="homePageOptionElements">
             {option}
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/**homepage MAIN*/}
       <div className="homeMainPage">

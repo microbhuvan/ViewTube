@@ -259,3 +259,25 @@ exports.getLikedVideos = async (req, res) => {
     return res.status(500).json({ error: "server error" });
   }
 };
+
+exports.getSuggestedVideos = async (req, res) => {
+  try {
+    const videoId = req.params.id;
+
+    const videos = await Video.find({
+      _id: { $ne: videoId },
+    })
+      .sort({ createdAt: -1 })
+      .limit(6)
+      .populate("user", "_id userName profilePic ");
+
+    if (!videos) {
+      return res.status(404).json({ message: "video doesnt exist" });
+    }
+
+    return res.status(200).json({ videos: videos });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "server error" });
+  }
+};

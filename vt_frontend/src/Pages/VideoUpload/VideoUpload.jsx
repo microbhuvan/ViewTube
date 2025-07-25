@@ -119,25 +119,25 @@ const VideoUpload = () => {
             className="uploadFormInput"
           ></input>
           <div className="uploadBtnTV">
-            Thumbnail .{" "}
+            Thumbnail{" "}
             <input
               type="file"
               accept="image/*"
               className="inputButtons"
               onChange={(e) => uploadField(e, "image")}
             ></input>
-            {loader && <CircularProgress disableShrink />}
           </div>
+          {loader && <CircularProgress disableShrink />}
           <div className="uploadBtnTV">
-            Video .
+            Video
             <input
               type="file"
               accept="video/mp4, video/webm, video/*"
               className="inputButtons"
               onChange={(e) => uploadField(e, "video")}
             ></input>
-            {loader && <CircularProgress disableShrink />}
           </div>
+          {loader && <CircularProgress disableShrink />}
         </div>
         <div className="uploadBtns">
           <div className="uploadBtn-form" onClick={handleUploadFunc}>

@@ -9,6 +9,8 @@
   padding: 12px;
   box-sizing: border-box;
   gap: 20px;
+  background: var(--bg-main);
+  color: var(--text-primary);
 }
 
 .likedVideoHeader {
@@ -16,6 +18,7 @@
   font-family: "Special Gothic Expanded One", sans-serif;
   font-weight: 400;
   text-align: center;
+  color: var(--text-primary);
 }
 
 .likedVideoContainer {
@@ -25,24 +28,25 @@
   width: 100%;
   max-width: 1200px;
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
 }
 
 .likedVideo {
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
-  color: inherit;
+  color: var(--text-primary);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s, color 0.3s;
 }
 
 .likedVideo:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background: var(--hover-bg);
 }
 
 .likedVideoThumbnail {
@@ -88,16 +92,17 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--text-primary);
 }
 
 .likedVideoProfileName {
   font-size: 14px;
-  color: #555;
   font-family: "Poppins", sans-serif;
+  color: var(--text-secondary);
 }
 
 .likedVideoViews {
   font-size: 12px;
-  color: #777;
   font-family: "Poppins", sans-serif;
+  color: var(--text-secondary);
 }

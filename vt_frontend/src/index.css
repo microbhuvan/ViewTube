@@ -1,4 +1,32 @@
+:root {
+  --bg-main: #f9f9f9;
+  --bg-card: #ffffff;
+  --text-primary: #111;
+  --text-secondary: #555;
+  --border-color: #ddd;
+  --hover-bg: #f0f0f0;
+  --button-bg: #e0e0e0;
+  --button-hover-bg: #d5d5d5;
+  --button-text-color: #111;
+}
+
+[data-theme="dark"] {
+  --bg-main: #121212;
+  --bg-card: #1e1e1e;
+  --text-primary: #f1f1f1;
+  --text-secondary: #cfcfcf;
+  --border-color: #333;
+  --hover-bg: #2a2a2a;
+  --button-bg: #2a2a2a;
+  --button-hover-bg: #3a3a3a;
+  --button-text-color: #f1f1f1;
+}
+
 body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: system-ui, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
   margin: 0;
   padding: 0;
 }

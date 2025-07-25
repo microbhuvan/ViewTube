@@ -8,6 +8,8 @@
   padding: 10px 13px 0 13px;
   flex: 1;
   overflow-x: hidden;
+  background: var(--bg-main);
+  color: var(--text-primary);
 }
 
 .profileTopSection {
@@ -28,7 +30,8 @@
 }
 
 .profileSubscribeButton {
-  background-color: gainsboro;
+  background-color: var(--button-bg, gainsboro);
+  color: var(--button-text-color, var(--text-primary));
   padding: 0px 16px;
   display: flex;
   justify-content: center;
@@ -41,7 +44,7 @@
 
 .profileActivateSubscribeButton {
   color: purple;
-  background-color: gainsboro;
+  background-color: var(--button-bg, gainsboro);
   padding: 0px 16px;
   display: flex;
   justify-content: center;
@@ -66,6 +69,7 @@
   font-weight: 600;
   font-style: normal;
   font-size: 25px;
+  color: var(--text-primary);
 }
 
 .profileVideoTitle {
@@ -73,66 +77,88 @@
   font-weight: bold;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .profileVideoSectionTitle {
   display: flex;
   align-items: center;
+  color: var(--text-primary);
 }
 
 .profileVideoContainer {
   display: flex;
-  gap: 10px;
-  height: 100vh;
+  gap: 16px;
   flex-wrap: wrap;
   margin-top: 20px;
+  justify-content: flex-start;
 }
 
 .profileVideo {
   width: 210px;
   cursor: pointer;
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profileVideo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .profileVideoThumbnail {
   width: 100%;
   height: 140px;
+  overflow: hidden;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .profileVideoThumbnailImg {
   width: 100%;
   height: 100%;
-  border-radius: 15px;
+  object-fit: cover;
+  display: block;
 }
 
 .profileVideoDetail {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 5px;
+  padding: 8px 10px;
+  gap: 4px;
 }
 
 .profileVideoDetailTitle {
   width: 100%;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.2;
+  color: var(--text-primary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  padding-bottom: 2px;
 }
 
 .profileVideoDetailInfo {
-  font-size: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-family: "Poppins", sans-serif;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 7680px) {
   .profilePage {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    margin-top: 56px;
+    margin-top: 120px;
     padding: 10px 5px 0 5px;
     justify-content: center;
     flex: 1;
