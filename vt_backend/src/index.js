@@ -1,11 +1,17 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-const PORT = 5000;
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL || "http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -21,10 +27,10 @@ app.use("/commentApi", commentRouter);
 connectDB()
   .then(() => {
     console.log("database connected successfully");
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT, () => {
       console.log("server started");
     });
   })
   .catch((err) => {
-    console.log("couldnt connect to database ");
+    console.log("couldnt connect to database ", err);
   });
