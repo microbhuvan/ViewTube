@@ -146,15 +146,15 @@ const VideoUpload = () => {
           {loader && <CircularProgress disableShrink />}
         </div>
         <div className="uploadBtns">
-          <div
+          <button
             className="uploadBtn-form"
             onClick={() => {
-              console.log("UPLOAD BUTTON CLICKED");
+              console.log("UPLOAD BUTTON TEST");
               handleUploadFunc();
             }}
           >
             Upload
-          </div>
+          </button>
 
           <div className="uploadBtn-form" onClick={() => navigate("/")}>
             Home
