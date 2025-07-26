@@ -2,7 +2,7 @@ import "./login.css";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../../utils/constant";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { toast, ToastContainer } from "react-toastify";
 import { LinearProgress } from "@mui/material";
@@ -11,6 +11,7 @@ const Login = ({ setLoginFunc }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [progressBar, setProgressBar] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     setProgressBar(true);
@@ -35,7 +36,7 @@ const Login = ({ setLoginFunc }) => {
 
         setTimeout(() => {
           setLoginFunc();
-          window.location.reload();
+          navigate("/");
         }, 1500);
       })
       .catch((err) => {
