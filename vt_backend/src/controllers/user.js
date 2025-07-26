@@ -53,6 +53,7 @@ exports.signUp = async (req, res) => {
     });
 
     const { password: _, ...safeUser } = user._doc;
+    //fetched from mongodb
 
     return res.status(200).json({
       message: "Logged in successfully",
