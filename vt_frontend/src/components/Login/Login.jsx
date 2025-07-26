@@ -36,8 +36,8 @@ const Login = ({ setLoginFunc }) => {
 
         setTimeout(() => {
           setLoginFunc();
-          //navigate("/");
-          window.location.reload();
+          navigate("/");
+          //window.location.reload();
         }, 1500);
       })
       .catch((err) => {
