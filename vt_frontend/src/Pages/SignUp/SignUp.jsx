@@ -63,10 +63,13 @@ const SignUp = () => {
       .post(`${BASE_URL}/auth/signup`, signUpField, { withCredentials: true })
       .then((res) => {
         console.log(res);
-
+        localStorage.setItem("token", res?.data?.token);
+        localStorage.setItem("user", JSON.stringify(res?.data?.user));
+        localStorage.setItem("userId", res?.data?.user?._id);
+        localStorage.setItem("userProfilePic", res?.data?.user?.profilePic);
         setProgressBar(false);
-        toast.success("Account created successfully. Please log in again");
-        navigate("/login");
+        toast.success("Account created successfully");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);

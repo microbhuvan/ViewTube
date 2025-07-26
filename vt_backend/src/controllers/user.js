@@ -7,31 +7,62 @@ const { Video } = require("../models/video");
 exports.signUp = async (req, res) => {
   try {
     const { userName, password, emailId, about, profilePic } = req.body;
-    const isExist = await User.findOne({ userName: userName });
 
+    if (!userName || !password || !emailId) {
+      return res.status(400).json({ error: "Please fill all required fields" });
+    }
+
+    const isExist = await User.findOne({ userName });
     if (isExist) {
       return res
         .status(400)
-        .json({ error: "username already exist please try another username" });
-    } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({
-        userName,
-        password: hashedPassword,
-        emailId,
-        about,
-        profilePic,
-      });
-
-      await user.save();
-
-      return res.status(201).json({
-        message: "user registered successfully",
-        success: true,
-      });
+        .json({ error: "Username already exists. Please try another." });
     }
+
+    const emailExists = await User.findOne({ emailId });
+    if (emailExists) {
+      return res
+        .status(400)
+        .json({ error: "Email already in use. Please try another." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({
+      userName,
+      password: hashedPassword,
+      emailId,
+      about,
+      profilePic,
+    });
+
+    await user.save();
+
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET not defined");
+    }
+
+    const token = await JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    const { password: _, ...safeUser } = user._doc;
+
+    return res.status(200).json({
+      message: "Logged in successfully",
+      success: true,
+      token,
+      user: safeUser,
+    });
   } catch (err) {
-    return res.status(500).json({ error: "server error" });
+    console.error("Signup Error:", err);
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
