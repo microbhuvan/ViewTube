@@ -69,7 +69,8 @@ const SignUp = () => {
         localStorage.setItem("userProfilePic", res?.data?.user?.profilePic);
         setProgressBar(false);
         toast.success("Account created successfully");
-        navigate("/");
+        window.location.href = "/";
+        //navigate("/");
       })
       .catch((err) => {
         console.log(err);
