@@ -32,7 +32,7 @@ app.use("/commentApi", commentRouter);
 connectDB()
   .then(() => {
     console.log("database connected successfully");
-    app.listen(5000, () => {
+    app.listen(process.env.PORT, () => {
       console.log("server started");
     });
   })
