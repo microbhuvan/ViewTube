@@ -4,17 +4,22 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const HomePage = ({ sideNavbar }) => {
   //const options = ["all", "music"];
+  const [loading, setLoading] = useState(false);
 
   const [videos, setVideos] = useState([]);
+
   useEffect(() => {
+    setLoading(true);
     axios
       .get(BASE_URL + "/api/allVideo", { withCredentials: true })
       .then((res) => {
-        console.log(res.data.videos);
+        //console.log(res.data.videos);
         setVideos(res.data.videos);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -35,6 +40,12 @@ const HomePage = ({ sideNavbar }) => {
       {/**homepage MAIN*/}
       <div className="homeMainPage">
         <div className="vt-videoContainer">
+          {loading && (
+            <div className="loading">
+              <CircularProgress />
+              <p>server loading...</p>
+            </div>
+          )}
           {videos?.map((video, index) => {
             return (
               <div className="vt-video" key={index}>

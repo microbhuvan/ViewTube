@@ -16,11 +16,11 @@ const Profile = () => {
     await axios
       .get(`${BASE_URL}/auth/user/${id}`, { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setUser(res?.data?.user);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 

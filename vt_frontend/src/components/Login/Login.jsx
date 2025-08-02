@@ -40,7 +40,7 @@ const Login = ({ setLoginFunc }) => {
         }, 1500);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         setProgressBar(false);
         toast.error(err?.response?.data?.error);
       });
