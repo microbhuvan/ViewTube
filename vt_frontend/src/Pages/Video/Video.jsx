@@ -1,3 +1,5 @@
+//fix number of subscribers part here
+
 import "./video.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";

@@ -44,6 +44,10 @@ const HomePage = ({ sideNavbar }) => {
             <div className="loading">
               <CircularProgress />
               <p>server loading...</p>
+              <p>
+                I am using free tier version of render to deploy server hence
+                the delay
+              </p>
             </div>
           )}
           {videos?.map((video, index) => {

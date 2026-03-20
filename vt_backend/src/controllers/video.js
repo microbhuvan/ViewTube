@@ -56,7 +56,7 @@ exports.getVideoById = async (req, res) => {
     console.log(id);
     const video = await Video.findById(id).populate(
       "user",
-      "_id userName about profilePic subscribers subscribedTo"
+      "_id userName about profilePic subscribers subscribedTo",
     );
 
     return res.status(200).json({ success: true, video: video });
@@ -71,7 +71,7 @@ exports.getUserVideo = async (req, res) => {
     let { userId } = req.params;
     const video = await Video.find({ user: userId }).populate(
       "user",
-      "_id userName about profilePic subscribers subscribedTo"
+      "_id userName about profilePic subscribers subscribedTo",
     );
 
     return res.status(200).json({ success: true, video: video });
@@ -84,7 +84,7 @@ exports.getAllVideo = async (req, res) => {
   try {
     const videos = await Video.find().populate(
       "user",
-      "_id userName about profilePic"
+      "_id userName about profilePic",
     );
 
     return res.status(200).json({
@@ -104,7 +104,7 @@ exports.incrementViews = async (req, res) => {
     const video = await Video.findByIdAndUpdate(
       videoId,
       { $inc: { views: 1 } },
-      { new: true }
+      { new: true },
     );
 
     if (!video) {
